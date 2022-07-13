@@ -16,6 +16,9 @@ struct Place {
     enum PlaceType: String {
         case restaurant = "Ресторан"
         case bar = "Бар"
+        
+        // Temporary solution, google how to change!!
+        static let values = [Place.PlaceType.bar, Place.PlaceType.restaurant]
     }
     
     static let restaurantNames = ["Christian",

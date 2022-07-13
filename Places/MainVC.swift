@@ -7,29 +7,27 @@
 
 import UIKit
 
-let restaurantNames = ["Christian",
-                       "Mercedes Bar",
-                       "Sixty",
-                       "Buono",
-                       "Карлсон",
-                       "Эларджи",
-                       "Проснись и Пой",
-                       "Цыцыла"]
+let places = Place.getPlaces()
 
 class MainVC: UITableViewController {
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurantNames.count
+        return places.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
-        cell.nameLabel.text = restaurantNames[indexPath.row]
-        cell.placeImage.image = UIImage(named: cell.nameLabel.text!)
+        let place = places[indexPath.row]
+        
+        cell.nameLabel.text = place.name
+        cell.placeImage.image = UIImage(named: place.image)
+        cell.locationLabel.text = place.location
+        cell.typeLabel.text = place.type.rawValue
+        
         cell.placeImage.contentMode = .scaleAspectFill
         cell.placeImage.layer.cornerRadius = cell.placeImage.frame.size.height / 2
     

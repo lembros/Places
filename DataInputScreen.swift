@@ -35,13 +35,31 @@ class DataInputScreen: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 0: break
-        default: view.endEditing(true)
+        case 0:
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            let camera = UIAlertAction(title: "Camera", style: .default) { _ in
+                self.chooseImagePicker(with: .camera)
+            }
+            
+            let library = UIAlertAction(title: "Choose from photo library", style: .default) { _ in
+                self.chooseImagePicker(with: .photoLibrary)
+            }
+            
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alert.addAction(camera)
+            alert.addAction(library)
+            alert.addAction(cancel)
+            
+            present(alert, animated: true)
+        default:
+            view.endEditing(true)
         }
     }
 }
 
-extension DataInputScreen: UITextFieldDelegate {
+extension DataInputScreen: UITextFieldDelegate, UIPickerViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -63,5 +81,15 @@ extension DataInputScreen: UIPickerViewDataSource {
     
 }
 
-extension DataInputScreen: UIPickerViewDelegate {
+// MARK: Working with images
+extension DataInputScreen  {
+    func chooseImagePicker(with source: UIImagePickerController.SourceType) {
+        guard UIImagePickerController.isSourceTypeAvailable(source) else { return }
+        
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.sourceType = source
+        
+        present(picker, animated: true)
+    }
 }

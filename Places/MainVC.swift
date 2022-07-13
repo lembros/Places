@@ -30,11 +30,16 @@ class MainVC: UITableViewController {
                 
         var content = cell.defaultContentConfiguration()
         content.text = restaurantNames[indexPath.row]
+        content.image = UIImage(named: content.text!)
+        content.imageProperties.cornerRadius = self.tableView(tableView, heightForRowAt: indexPath)
         cell.contentConfiguration = content
 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        60
+    }
 
     /*
     // Override to support conditional editing of the table view.

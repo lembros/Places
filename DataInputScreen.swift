@@ -59,14 +59,14 @@ class DataInputScreen: UITableViewController {
     }
 }
 
-extension DataInputScreen: UITextFieldDelegate, UIPickerViewDelegate {
+extension DataInputScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 }
 
-extension DataInputScreen: UIPickerViewDataSource {
+extension DataInputScreen: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -82,14 +82,22 @@ extension DataInputScreen: UIPickerViewDataSource {
 }
 
 // MARK: Working with images
-extension DataInputScreen  {
+extension DataInputScreen: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     func chooseImagePicker(with source: UIImagePickerController.SourceType) {
         guard UIImagePickerController.isSourceTypeAvailable(source) else { return }
         
         let picker = UIImagePickerController()
+        picker.delegate = self
         picker.allowsEditing = true
         picker.sourceType = source
         
         present(picker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        self.image.image = info[.editedImage] as? UIImage
+        self.image.contentMode = .scaleAspectFill
+        
+        dismiss(animated: true)
     }
 }

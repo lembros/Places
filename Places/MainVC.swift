@@ -7,7 +7,7 @@
 
 import UIKit
 
-let places = Place.getPlaces()
+var places = Place.getPlaces()
 
 class MainVC: UITableViewController {
 
@@ -24,9 +24,12 @@ class MainVC: UITableViewController {
         let place = places[indexPath.row]
         
         cell.nameLabel.text = place.name
-        cell.placeImage.image = UIImage(named: place.image)
-        cell.locationLabel.text = place.location
-        cell.typeLabel.text = place.type.rawValue
+        cell.placeImage.image = place.image
+        if place.location != nil {
+            cell.locationLabel.text = place.location
+        }
+        
+        cell.typeLabel.text = place.type?.rawValue
         
         cell.placeImage.contentMode = .scaleAspectFill
         cell.placeImage.layer.cornerRadius = cell.placeImage.frame.size.height / 2
@@ -35,6 +38,10 @@ class MainVC: UITableViewController {
     }
     
     @IBAction func cancelAction(_ segue: UIStoryboardSegue) {
+        guard let svc = segue.source as? DataInputScreen else { return }
+        let newPlace = svc.getNewPlace()
+        places.append(newPlace)
+        tableView.reloadData()
     }
 
 }

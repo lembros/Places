@@ -5,13 +5,13 @@
 //  Created by Егор Губанов on 13.07.2022.
 //
 
-import Foundation
+import UIKit
 
 struct Place {
     var name: String
-    var location: String
-    var image: String
-    var type: PlaceType
+    var location: String?
+    var image: UIImage?
+    var type: PlaceType?
     
     enum PlaceType: String {
         case restaurant = "Ресторан"
@@ -34,7 +34,7 @@ struct Place {
         var places = [Place]()
         
         for name in restaurantNames {
-            places.append(Place(name: name, location: "Москва", image: name, type: .restaurant))
+            places.append(Place(name: name, location: "Москва", image: UIImage(named: name), type: .restaurant))
         }
         
         return places

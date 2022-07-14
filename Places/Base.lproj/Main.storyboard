@@ -108,7 +108,7 @@
         <scene sceneID="lz2-dN-O4b">
             <objects>
                 <tableViewController id="XzG-H3-Px7" customClass="DataInputScreen" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="ojx-iw-blr">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="ojx-iw-blr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -143,18 +143,18 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-Ae-hxo">
-                                                    <rect key="frame" x="20" y="11" width="374" height="63"/>
+                                                    <rect key="frame" x="20" y="21" width="374" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name of place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Fi-hg-dif">
-                                                            <rect key="frame" x="0.0" y="0.0" width="109" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="109" height="25"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Цыпленок на вертеле" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="w79-iX-iaR">
-                                                            <rect key="frame" x="0.0" y="33" width="374" height="30"/>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Цыпленок на вертеле" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="w79-iX-iaR">
+                                                            <rect key="frame" x="0.0" y="28" width="374" height="25"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <textInputTraits key="textInputTraits"/>
+                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
@@ -166,7 +166,7 @@
                                             <constraints>
                                                 <constraint firstItem="aTZ-Ae-hxo" firstAttribute="leading" secondItem="LXs-wX-9VF" secondAttribute="leadingMargin" id="5vb-ar-KnH"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="aTZ-Ae-hxo" secondAttribute="bottom" constant="-5" id="Zpd-qw-HHa"/>
-                                                <constraint firstItem="aTZ-Ae-hxo" firstAttribute="top" secondItem="LXs-wX-9VF" secondAttribute="topMargin" id="eGa-es-d3k"/>
+                                                <constraint firstItem="aTZ-Ae-hxo" firstAttribute="top" secondItem="LXs-wX-9VF" secondAttribute="topMargin" constant="10" id="eGa-es-d3k"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="aTZ-Ae-hxo" secondAttribute="trailing" id="jLP-YP-uZV"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -179,18 +179,18 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="RBV-3E-6ND">
-                                                    <rect key="frame" x="20" y="11" width="374" height="63"/>
+                                                    <rect key="frame" x="20" y="21" width="374" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location of place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k49-lV-Ugq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="129" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="129" height="25"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Цыпленок на вертеле" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hmp-ZE-WSg">
-                                                            <rect key="frame" x="0.0" y="33" width="374" height="30"/>
+                                                            <rect key="frame" x="0.0" y="28" width="374" height="25"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <textInputTraits key="textInputTraits"/>
+                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
@@ -202,7 +202,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="RBV-3E-6ND" secondAttribute="trailing" id="dlz-DT-BN6"/>
                                                 <constraint firstItem="RBV-3E-6ND" firstAttribute="leading" secondItem="xYw-6Q-hfg" secondAttribute="leadingMargin" id="dqG-Qa-d2Y"/>
-                                                <constraint firstItem="RBV-3E-6ND" firstAttribute="top" secondItem="xYw-6Q-hfg" secondAttribute="topMargin" id="lDF-TV-laW"/>
+                                                <constraint firstItem="RBV-3E-6ND" firstAttribute="top" secondItem="xYw-6Q-hfg" secondAttribute="topMargin" constant="10" id="lDF-TV-laW"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="RBV-3E-6ND" secondAttribute="bottom" constant="-5" id="qe9-Bp-MtD"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -235,12 +235,17 @@
                     <navigationItem key="navigationItem" title="New Place" id="2tv-Bg-SSn">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="LOS-vI-qsH">
                             <connections>
-                                <segue destination="NoK-Z9-VFL" kind="unwind" unwindAction="cancelAction:" id="HSC-dj-drb"/>
+                                <action selector="cancelPressed:" destination="XzG-H3-Px7" id="Dow-XV-N1o"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="Xv7-Uq-UH1"/>
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="Xv7-Uq-UH1">
+                            <connections>
+                                <segue destination="NoK-Z9-VFL" kind="unwind" unwindAction="cancelAction:" id="uaz-XZ-Hhv"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="Xv7-Uq-UH1" id="heS-52-fXb"/>
                         <outlet property="image" destination="ePW-ZY-6Oq" id="txO-yn-RJw"/>
                         <outlet property="locationField" destination="hmp-ZE-WSg" id="lVe-j4-zUh"/>
                         <outlet property="placeNameField" destination="w79-iX-iaR" id="0Np-5s-E9c"/>

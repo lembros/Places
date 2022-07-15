@@ -9,13 +9,12 @@ import UIKit
 
 class DataInputScreen: UITableViewController {
 
-    @IBOutlet weak var typePicker: UIPickerView!
     @IBOutlet weak var placeNameField: UITextField!
     @IBOutlet weak var locationField: UITextField!
+    @IBOutlet weak var typeField: UITextField!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var addButton: UIBarButtonItem!
-    
-    var typeChosen: Place.PlaceType = Place.PlaceType.values.first!
+        
     var wasImageChosen = false
     
     override func viewDidLoad() {
@@ -27,21 +26,20 @@ class DataInputScreen: UITableViewController {
         placeNameField.delegate = self
         locationField.delegate = self
         
-        typePicker.dataSource = self
-        typePicker.delegate = self
-    
         addButton.isEnabled = false
         placeNameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
     }
     
+    // MARK: New place
     func getNewPlace() -> Place {
         
         let location = locationField.text!.isEmpty ? nil : locationField.text
+        let imageData = wasImageChosen ? image.image?.pngData() : UIImage(named: "imagePlaceholder")?.pngData()
         
         let place = Place(name: placeNameField.text!,
                           location: location,
-                          image: wasImageChosen ? image.image : UIImage(named: "imagePlaceholder"),
-                          type: typeChosen)
+                          type: typeField.text,
+                          imageData: imageData)
         return place
     }
 
@@ -99,26 +97,6 @@ extension DataInputScreen: UITextFieldDelegate {
     }
 }
 
-
-// MARK: Working with picker
-extension DataInputScreen: UIPickerViewDataSource, UIPickerViewDelegate {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Place.PlaceType.values.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Place.PlaceType.values[row].rawValue
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        typeChosen = Place.PlaceType.values[row]
-    }
-    
-}
 
 // MARK: Working with images
 extension DataInputScreen: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {

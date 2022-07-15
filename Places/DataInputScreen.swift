@@ -33,11 +33,10 @@ class DataInputScreen: UITableViewController {
     // MARK: New place
     func getNewPlace() -> Place {
         
-        let location = locationField.text!.isEmpty ? nil : locationField.text
         let imageData = wasImageChosen ? image.image?.pngData() : UIImage(named: "imagePlaceholder")?.pngData()
         
         let place = Place(name: placeNameField.text!,
-                          location: location,
+                          location: locationField.text,
                           type: typeField.text,
                           imageData: imageData)
         return place

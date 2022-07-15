@@ -8,8 +8,11 @@
 import RealmSwift
 
 let realm = try! Realm()
+var places = realm.objects(Place.self)
 
 class StorageManager {
+    
+    
     static func add(object: Place) {
         try! realm.write {
             realm.add(object)

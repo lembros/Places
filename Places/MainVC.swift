@@ -7,18 +7,29 @@
 
 import UIKit
 
-class MainVC: UITableViewController {
+class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var ascendingSortButton: UIBarButtonItem!
+    @IBOutlet weak var sortingSegmentedControl: UISegmentedControl!
+    
+    var isAscendingSort = true
+    
+    override func viewDidLoad() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
     
     // MARK: - Table view data source
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return realm.objects(Place.self).count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
-        let place = realm.objects(Place.self)[indexPath.row]
+        let place = places[indexPath.row]
         
         cell.place = place
         
@@ -39,9 +50,9 @@ class MainVC: UITableViewController {
     
     // MARK: Table View delegate
     
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let place = realm.objects(Place.self)[indexPath.row]
+        let place = places[indexPath.row]
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
             StorageManager.delete(object: place)
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -49,6 +60,8 @@ class MainVC: UITableViewController {
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
+    
+    // MARK: Segue between screens
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "EditSegue" else { return }
@@ -73,6 +86,32 @@ class MainVC: UITableViewController {
             StorageManager.replace(object: realm.objects(Place.self)[indexPath.row], with: newPlace)
         } else {
             StorageManager.add(object: newPlace)
+        }
+        
+        tableView.reloadData()
+    }
+    
+    
+    // MARK: Sorting
+    
+    @IBAction func changeSortngRule(_ sender: Any) {
+        doSorting()
+    }
+    
+    @IBAction func changeSortingOrder(_ sender: Any) {
+        isAscendingSort.toggle()
+        ascendingSortButton.image = isAscendingSort ? UIImage(named: "AZ") : UIImage(named: "ZA")
+        doSorting()
+    }
+    
+    
+    private func doSorting() {
+        switch sortingSegmentedControl.selectedSegmentIndex {
+        case 0:
+            places = places.sorted(by: \Place.date, ascending: isAscendingSort)
+        case 1:
+            places = places.sorted(by: \Place.name, ascending: isAscendingSort)
+        default: break
         }
         tableView.reloadData()
     }

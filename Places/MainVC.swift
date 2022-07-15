@@ -47,10 +47,37 @@ class MainVC: UITableViewController {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "EditSegue" else { return }
+        guard let cell = sender as? CustomTableViewCell else { return }
+        guard let navigator = segue.destination as? UINavigationController else { return }
+        
+        print(navigator.viewControllers.count)
+        
+        let dvc = navigator.viewControllers.first! as! DataInputScreen
+        
+        dvc.currentTitle = cell.nameLabel.text
+        dvc.name = cell.nameLabel.text!
+        dvc.location = cell.locationLabel.text!
+        dvc.type = cell.typeLabel.text!
+        dvc.addButton.isEnabled = true
+        
+        if cell.placeImage.image != UIImage(named: "imagePlaceholder") {
+            dvc.currentImage = cell.placeImage.image
+            dvc.wasImageChosen = true
+        }
+
+    }
+    
     @IBAction func doneAction(_ segue: UIStoryboardSegue) {
         guard let svc = segue.source as? DataInputScreen else { return }
         let newPlace = svc.getNewPlace()
-        StorageManager.add(object: newPlace)
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            StorageManager.replace(object: realm.objects(Place.self)[indexPath.row], with: newPlace)
+        } else {
+            StorageManager.add(object: newPlace)
+        }
         tableView.reloadData()
     }
 }

@@ -9,25 +9,46 @@ import UIKit
 
 class DataInputScreen: UITableViewController {
 
+    @IBOutlet weak var topBar: UINavigationItem!
     @IBOutlet weak var placeNameField: UITextField!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var typeField: UITextField!
     @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem! {
+        didSet {
+            addButton.isEnabled = false
+        }
+    }
+    
+    var name = "", location = "", type = ""
+    var currentImage = UIImage(named: "Photo")
+    var currentTitle: String?  = "New Place"
         
     var wasImageChosen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        placeNameField.returnKeyType = .done
-        locationField.returnKeyType = .done
+        setupScreen()
         
         placeNameField.delegate = self
         locationField.delegate = self
         
-        addButton.isEnabled = false
         placeNameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+    }
+    
+    private func setupScreen() {
+        placeNameField.text = name
+        locationField.text = location
+        typeField.text = type
+        image.image = currentImage
+        if wasImageChosen {
+            self.image.contentMode = .scaleAspectFill
+        }
+        
+        placeNameField.returnKeyType = .done
+        locationField.returnKeyType = .done
+        title = currentTitle
     }
     
     // MARK: New place
@@ -46,9 +67,7 @@ class DataInputScreen: UITableViewController {
         dismiss(animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        0
-    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 0 }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         view.endEditing(true)
@@ -69,6 +88,7 @@ class DataInputScreen: UITableViewController {
             let library = UIAlertAction(title: "Choose from photo library", style: .default) { _ in
                 self.chooseImagePicker(with: .photoLibrary)
             }
+            
             library.setValue(photoIcon, forKey: "image")
             library.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             

@@ -74,11 +74,11 @@
 				468A1B5B287F0D9200B413A0 /* DataInputScreen.swift */,
 				463154FB287B161500AE0FC5 /* MainVC.swift */,
 				468A1B59287F08E000B413A0 /* Place.swift */,
+				4642894F2880304200EC4E6E /* StorageManager.swift */,
 				463154ED287B13ED00AE0FC5 /* Main.storyboard */,
 				463154F0287B13F000AE0FC5 /* Assets.xcassets */,
 				463154F2287B13F000AE0FC5 /* LaunchScreen.storyboard */,
 				463154F5287B13F000AE0FC5 /* Info.plist */,
-				4642894F2880304200EC4E6E /* StorageManager.swift */,
 			);
 			path = Places;
 			sourceTree = "<group>";

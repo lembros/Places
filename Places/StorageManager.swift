@@ -22,4 +22,13 @@ class StorageManager {
         }
     }
     
+    static func replace(object: Place, with newObject: Place) {
+        try! realm.write {
+            object.name = newObject.name
+            object.location = newObject.location
+            object.type = newObject.type
+            object.imageData = newObject.imageData
+        }
+    }
+    
 }

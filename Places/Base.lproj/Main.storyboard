@@ -31,22 +31,22 @@
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="1lB-qY-6Es">
-                                            <rect key="frame" x="80" y="0.0" width="324" height="65"/>
+                                            <rect key="frame" x="80" y="5" width="324" height="55"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91e-40-Uuy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="40.5" height="25"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="40.5" height="21"/>
                                                     <fontDescription key="fontDescription" name="Kefa-Regular" family="Kefa" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3tt-O0-j9R">
-                                                    <rect key="frame" x="0.0" y="27" width="50" height="19"/>
+                                                    <rect key="frame" x="0.0" y="23" width="50" height="16"/>
                                                     <fontDescription key="fontDescription" name="Kefa-Regular" family="Kefa" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nF-Vy-QSf">
-                                                    <rect key="frame" x="0.0" y="48" width="23" height="17"/>
+                                                    <rect key="frame" x="0.0" y="41" width="23" height="14"/>
                                                     <fontDescription key="fontDescription" name="Kefa-Regular" family="Kefa" pointSize="11"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -56,8 +56,8 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="mZ1-Lg-yRm" firstAttribute="centerY" secondItem="Bb6-bE-jps" secondAttribute="centerY" id="DgV-jE-HX8"/>
-                                        <constraint firstAttribute="bottom" secondItem="1lB-qY-6Es" secondAttribute="bottom" id="JHR-Ev-hyR"/>
-                                        <constraint firstItem="1lB-qY-6Es" firstAttribute="top" secondItem="Bb6-bE-jps" secondAttribute="top" id="MIf-gB-5Lb"/>
+                                        <constraint firstAttribute="bottom" secondItem="1lB-qY-6Es" secondAttribute="bottom" constant="5" id="JHR-Ev-hyR"/>
+                                        <constraint firstItem="1lB-qY-6Es" firstAttribute="top" secondItem="Bb6-bE-jps" secondAttribute="top" constant="5" id="MIf-gB-5Lb"/>
                                         <constraint firstAttribute="trailing" secondItem="1lB-qY-6Es" secondAttribute="trailing" constant="10" id="TPP-Vq-xP9"/>
                                         <constraint firstItem="1lB-qY-6Es" firstAttribute="leading" secondItem="mZ1-Lg-yRm" secondAttribute="trailing" constant="10" id="hAc-50-4Gs"/>
                                         <constraint firstItem="mZ1-Lg-yRm" firstAttribute="leading" secondItem="Bb6-bE-jps" secondAttribute="leading" constant="15" id="wTp-f0-U1r"/>

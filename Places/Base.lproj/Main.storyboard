@@ -269,7 +269,6 @@
                         <outlet property="image" destination="ePW-ZY-6Oq" id="txO-yn-RJw"/>
                         <outlet property="locationField" destination="hmp-ZE-WSg" id="lVe-j4-zUh"/>
                         <outlet property="placeNameField" destination="w79-iX-iaR" id="0Np-5s-E9c"/>
-                        <outlet property="topBar" destination="2tv-Bg-SSn" id="w4X-V6-vdy"/>
                         <outlet property="typeField" destination="P7o-LR-1ZD" id="Fhq-RF-FL2"/>
                     </connections>
                 </tableViewController>

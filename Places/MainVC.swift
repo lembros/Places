@@ -20,6 +20,8 @@ class MainVC: UITableViewController {
         
         let place = realm.objects(Place.self)[indexPath.row]
         
+        cell.place = place
+        
         cell.nameLabel.text = place.name
         cell.placeImage.image = UIImage(data: place.imageData!)
         
@@ -38,6 +40,7 @@ class MainVC: UITableViewController {
     // MARK: Table View delegate
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         let place = realm.objects(Place.self)[indexPath.row]
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
             StorageManager.delete(object: place)
@@ -57,15 +60,8 @@ class MainVC: UITableViewController {
         let dvc = navigator.viewControllers.first! as! DataInputScreen
         
         dvc.currentTitle = cell.nameLabel.text
-        dvc.name = cell.nameLabel.text!
-        dvc.location = cell.locationLabel.text!
-        dvc.type = cell.typeLabel.text!
-        dvc.addButton.isEnabled = true
-        
-        if cell.placeImage.image != UIImage(named: "imagePlaceholder") {
-            dvc.currentImage = cell.placeImage.image
-            dvc.wasImageChosen = true
-        }
+        dvc.place = cell.place
+        dvc.wasImageChosen = true
 
     }
     

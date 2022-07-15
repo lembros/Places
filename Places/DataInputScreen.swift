@@ -9,7 +9,6 @@ import UIKit
 
 class DataInputScreen: UITableViewController {
 
-    @IBOutlet weak var topBar: UINavigationItem!
     @IBOutlet weak var placeNameField: UITextField!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var typeField: UITextField!
@@ -20,8 +19,7 @@ class DataInputScreen: UITableViewController {
         }
     }
     
-    var name = "", location = "", type = ""
-    var currentImage = UIImage(named: "Photo")
+    var place: Place?
     var currentTitle: String?  = "New Place"
         
     var wasImageChosen = false
@@ -38,17 +36,22 @@ class DataInputScreen: UITableViewController {
     }
     
     private func setupScreen() {
-        placeNameField.text = name
-        locationField.text = location
-        typeField.text = type
-        image.image = currentImage
+        placeNameField.returnKeyType = .done
+        locationField.returnKeyType = .done
+        title = currentTitle
+        
+        guard let place = place else { return }
+
+        addButton.isEnabled = true
+        placeNameField.text = place.name
+        locationField.text = place.location
+        typeField.text = place.type
+        image.image = UIImage(data: place.imageData!)
         if wasImageChosen {
             self.image.contentMode = .scaleAspectFill
         }
         
-        placeNameField.returnKeyType = .done
-        locationField.returnKeyType = .done
-        title = currentTitle
+        
     }
     
     // MARK: New place
@@ -56,11 +59,11 @@ class DataInputScreen: UITableViewController {
         
         let imageData = wasImageChosen ? image.image?.pngData() : UIImage(named: "imagePlaceholder")?.pngData()
         
-        let place = Place(name: placeNameField.text!,
+        place = Place(name: placeNameField.text!,
                           location: locationField.text,
                           type: typeField.text,
                           imageData: imageData)
-        return place
+        return place!
     }
 
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {

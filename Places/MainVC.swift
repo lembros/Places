@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -13,24 +14,37 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var ascendingSortButton: UIBarButtonItem!
     @IBOutlet weak var sortingSegmentedControl: UISegmentedControl!
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    var placesFound: Results<Place>!
     var isAscendingSort = true
+    var isSearching: Bool {
+        searchController.isActive && !(searchController.searchBar.text?.isEmpty ?? true)
+    }
     
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self
+        
+        navigationItem.searchController = searchController
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+    
+        doSorting()
     }
     
     // MARK: - Table view data source
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return realm.objects(Place.self).count
+        return isSearching ? placesFound.count : places.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
-        let place = places[indexPath.row]
-        
+        let place = isSearching ? placesFound[indexPath.row] : places[indexPath.row]
         cell.place = place
         
         cell.nameLabel.text = place.name
@@ -44,7 +58,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
         cell.placeImage.contentMode = .scaleAspectFill
         cell.placeImage.layer.cornerRadius = cell.placeImage.frame.size.height / 2
-    
+        
         return cell
     }
     
@@ -52,7 +66,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let place = places[indexPath.row]
+        let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
+        let place = cell.place!
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
             StorageManager.delete(object: place)
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -61,29 +76,30 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    // MARK: Segue between screens
+    // MARK: Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "EditSegue" else { return }
         guard let cell = sender as? CustomTableViewCell else { return }
         guard let navigator = segue.destination as? UINavigationController else { return }
-        
-        print(navigator.viewControllers.count)
-        
+                
         let dvc = navigator.viewControllers.first! as! DataInputScreen
         
         dvc.currentTitle = cell.nameLabel.text
         dvc.place = cell.place
         dvc.wasImageChosen = true
-
     }
     
     @IBAction func doneAction(_ segue: UIStoryboardSegue) {
         guard let svc = segue.source as? DataInputScreen else { return }
         let newPlace = svc.getNewPlace()
         
+        
         if let indexPath = tableView.indexPathForSelectedRow {
-            StorageManager.replace(object: realm.objects(Place.self)[indexPath.row], with: newPlace)
+            
+            let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
+            
+            StorageManager.replace(object: cell.place, with: newPlace)
         } else {
             StorageManager.add(object: newPlace)
         }
@@ -115,4 +131,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         tableView.reloadData()
     }
+}
+
+extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchingFor = searchController.searchBar.text!
+        
+        placesFound = places.where {
+            $0.name.contains(searchingFor, options: .caseInsensitive) || $0.location.contains(searchingFor, options: .caseInsensitive)
+        }
+        tableView.reloadData()
+    }
+    
 }

@@ -14,13 +14,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var ascendingSortButton: UIBarButtonItem!
     @IBOutlet weak var sortingSegmentedControl: UISegmentedControl!
     
+    // Searching properties
     let searchController = UISearchController(searchResultsController: nil)
-    
     private var placesFound: Results<Place>!
-    private var isAscendingSort = true
     private var isSearching: Bool {
         searchController.isActive && !(searchController.searchBar.text?.isEmpty ?? true)
     }
+    
+    // Sorting properties
+    private var isAscendingSort = true
     
     override func viewDidLoad() {
         tableView.delegate = self
@@ -76,10 +78,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
     // MARK: Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -98,16 +96,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         guard let svc = segue.source as? DataInputScreen else { return }
         let newPlace = svc.getNewPlace()
         
-        
         if let indexPath = tableView.indexPathForSelectedRow {
-            
+            tableView.deselectRow(at: indexPath, animated: true)
             let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
-            
             StorageManager.replace(object: cell.place, with: newPlace)
         } else {
             StorageManager.add(object: newPlace)
         }
-        
         tableView.reloadData()
     }
     

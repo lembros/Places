@@ -278,7 +278,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="e2L-a8-e9J">
-                                                    <rect key="frame" x="80" y="5" width="134" height="55"/>
+                                                    <rect key="frame" x="80" y="5" width="239" height="55"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zS-Ir-TtW">
                                                             <rect key="frame" x="0.0" y="0.0" width="40.5" height="21"/>
@@ -328,11 +328,11 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="e2L-a8-e9J" secondAttribute="bottom" constant="5" id="1G2-f3-7lk"/>
                                                 <constraint firstItem="e2L-a8-e9J" firstAttribute="top" secondItem="Oyk-W2-eoX" secondAttribute="top" constant="5" id="6Q6-LZ-rpa"/>
+                                                <constraint firstItem="xEM-m4-nry" firstAttribute="leading" secondItem="e2L-a8-e9J" secondAttribute="trailing" constant="5" id="JUZ-9T-6gh"/>
                                                 <constraint firstItem="e2L-a8-e9J" firstAttribute="leading" secondItem="zPy-kD-7ED" secondAttribute="trailing" constant="10" id="Yzf-7S-5gm"/>
                                                 <constraint firstAttribute="trailing" secondItem="xEM-m4-nry" secondAttribute="trailing" constant="15" id="eAO-oK-yp8"/>
                                                 <constraint firstItem="xEM-m4-nry" firstAttribute="centerY" secondItem="Oyk-W2-eoX" secondAttribute="centerY" id="fmz-72-lBQ"/>
                                                 <constraint firstItem="zPy-kD-7ED" firstAttribute="centerY" secondItem="Oyk-W2-eoX" secondAttribute="centerY" id="ids-kw-O6Y"/>
-                                                <constraint firstAttribute="trailing" secondItem="e2L-a8-e9J" secondAttribute="trailing" constant="200" id="n8v-EE-93V"/>
                                                 <constraint firstItem="zPy-kD-7ED" firstAttribute="leading" secondItem="Oyk-W2-eoX" secondAttribute="leading" constant="15" id="nSl-YJ-Wa0"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -369,7 +369,7 @@
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Zkg-3r-Kdu">
-                            <rect key="frame" x="62" y="6" width="292.5" height="33"/>
+                            <rect key="frame" x="62" y="5.5" width="292.5" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Date"/>

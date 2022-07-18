@@ -18,6 +18,7 @@ class DataInputScreen: UITableViewController {
             addButton.isEnabled = false
         }
     }
+    @IBOutlet weak var ratingCell: RatingCell!
     
     var place: Place?
     var currentTitle: String?  = "New Place"
@@ -51,7 +52,7 @@ class DataInputScreen: UITableViewController {
             self.image.contentMode = .scaleAspectFill
         }
         
-        
+        ratingCell.setNewRating(place.rating)
     }
     
     // MARK: New place
@@ -60,9 +61,10 @@ class DataInputScreen: UITableViewController {
         let imageData = wasImageChosen ? image.image?.pngData() : UIImage(named: "imagePlaceholder")?.pngData()
         
         place = Place(name: placeNameField.text!,
-                          location: locationField.text,
-                          type: typeField.text,
-                          imageData: imageData)
+                      location: locationField.text,
+                      type: typeField.text,
+                      imageData: imageData,
+                      rating: ratingCell.rating)
         return place!
     }
 

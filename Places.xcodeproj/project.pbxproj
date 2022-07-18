@@ -17,6 +17,7 @@
 		468A1B58287EFB1400B413A0 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A1B57287EFB1400B413A0 /* CustomTableViewCell.swift */; };
 		468A1B5A287F08E000B413A0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A1B59287F08E000B413A0 /* Place.swift */; };
 		468A1B5C287F0D9200B413A0 /* DataInputScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A1B5B287F0D9200B413A0 /* DataInputScreen.swift */; };
+		46B8210B28844FF600F300F0 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B8210A28844FF600F300F0 /* RatingCell.swift */; };
 		46F0A75828803D800003B236 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 46F0A75728803D800003B236 /* Realm */; };
 		46F0A75A28803D800003B236 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46F0A75928803D800003B236 /* RealmSwift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		468A1B57287EFB1400B413A0 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		468A1B59287F08E000B413A0 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		468A1B5B287F0D9200B413A0 /* DataInputScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInputScreen.swift; sourceTree = "<group>"; };
+		46B8210A28844FF600F300F0 /* RatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				468A1B59287F08E000B413A0 /* Place.swift */,
 				4642894F2880304200EC4E6E /* StorageManager.swift */,
 				463154ED287B13ED00AE0FC5 /* Main.storyboard */,
+				46B8210A28844FF600F300F0 /* RatingCell.swift */,
 				463154F0287B13F000AE0FC5 /* Assets.xcassets */,
 				463154F2287B13F000AE0FC5 /* LaunchScreen.storyboard */,
 				463154F5287B13F000AE0FC5 /* Info.plist */,
@@ -166,6 +169,7 @@
 				468A1B58287EFB1400B413A0 /* CustomTableViewCell.swift in Sources */,
 				464289502880304200EC4E6E /* StorageManager.swift in Sources */,
 				463154EA287B13ED00AE0FC5 /* SceneDelegate.swift in Sources */,
+				46B8210B28844FF600F300F0 /* RatingCell.swift in Sources */,
 				468A1B5C287F0D9200B413A0 /* DataInputScreen.swift in Sources */,
 				468A1B5A287F08E000B413A0 /* Place.swift in Sources */,
 			);

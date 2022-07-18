@@ -16,9 +16,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var placesFound: Results<Place>!
-    var isAscendingSort = true
-    var isSearching: Bool {
+    private var placesFound: Results<Place>!
+    private var isAscendingSort = true
+    private var isSearching: Bool {
         searchController.isActive && !(searchController.searchBar.text?.isEmpty ?? true)
     }
     
@@ -46,7 +46,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let place = isSearching ? placesFound[indexPath.row] : places[indexPath.row]
         cell.place = place
-        
+                
         cell.nameLabel.text = place.name
         cell.placeImage.image = UIImage(data: place.imageData!)
         
@@ -74,6 +74,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: Segues
@@ -127,11 +131,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             places = places.sorted(by: \Place.date, ascending: isAscendingSort)
         case 1:
             places = places.sorted(by: \Place.name, ascending: isAscendingSort)
+        case 2:
+            places = places.sorted(by: \Place.rating, ascending: isAscendingSort)
         default: break
         }
         tableView.reloadData()
     }
 }
+
+// MARK: Searching
 
 extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {

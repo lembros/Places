@@ -13,6 +13,22 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
-
-    var place: Place!
+    
+    @IBOutlet var images: [UIImageView]!
+    
+    var place: Place! {
+        didSet {
+            let length = 15
+            let size = CGSize(width: length, height: length)
+            
+            let emptyStar = UIImage(named: "emptyStar")?.scalePreservingAspectRatio(targetSize: size)
+            let filledStar = UIImage(named: "filledStar")?.scalePreservingAspectRatio(targetSize: size)
+            guard place != nil else { return }
+            
+            for (index, imageView) in images.enumerated() {
+                imageView.image = index < place.rating ? filledStar : emptyStar
+                imageView.frame.size = size
+            }
+        }
+    }
 }

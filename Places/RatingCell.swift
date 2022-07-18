@@ -61,13 +61,9 @@ class RatingCell: UITableViewCell {
     
     func setNewRating(_ rating: Int) {
         guard (0...5).contains(rating) else { return }
-        
         for (index, button) in stars.enumerated() {
             button.isSelected = index < rating
         }
-        
-        print("Changing rating from \(self.rating) to \(rating)")
-        
         self.rating = rating
     }
 

@@ -18,8 +18,7 @@
 		468A1B5A287F08E000B413A0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A1B59287F08E000B413A0 /* Place.swift */; };
 		468A1B5C287F0D9200B413A0 /* DataInputScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A1B5B287F0D9200B413A0 /* DataInputScreen.swift */; };
 		46B8210B28844FF600F300F0 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B8210A28844FF600F300F0 /* RatingCell.swift */; };
-		46F0A75828803D800003B236 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 46F0A75728803D800003B236 /* Realm */; };
-		46F0A75A28803D800003B236 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46F0A75928803D800003B236 /* RealmSwift */; };
+		6AC17CFBA0D72FA8A693869D /* Pods_Places.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E302C400B4F92E15672B4BE /* Pods_Places.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +35,9 @@
 		468A1B59287F08E000B413A0 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		468A1B5B287F0D9200B413A0 /* DataInputScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInputScreen.swift; sourceTree = "<group>"; };
 		46B8210A28844FF600F300F0 /* RatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
+		8E302C400B4F92E15672B4BE /* Pods_Places.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Places.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE4C232F10E96B37C492B7E2 /* Pods-Places.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Places.debug.xcconfig"; path = "Target Support Files/Pods-Places/Pods-Places.debug.xcconfig"; sourceTree = "<group>"; };
+		E00A7327995E2943ACFAF060 /* Pods-Places.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Places.release.xcconfig"; path = "Target Support Files/Pods-Places/Pods-Places.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,8 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46F0A75A28803D800003B236 /* RealmSwift in Frameworks */,
-				46F0A75828803D800003B236 /* Realm in Frameworks */,
+				6AC17CFBA0D72FA8A693869D /* Pods_Places.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +57,8 @@
 			children = (
 				463154E6287B13ED00AE0FC5 /* Places */,
 				463154E5287B13ED00AE0FC5 /* Products */,
+				CA2F49CF84F0AFE40A643C2B /* Pods */,
+				66F4F09BDBA64019DEB18D32 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,16 +77,33 @@
 				463154E9287B13ED00AE0FC5 /* SceneDelegate.swift */,
 				468A1B57287EFB1400B413A0 /* CustomTableViewCell.swift */,
 				468A1B5B287F0D9200B413A0 /* DataInputScreen.swift */,
+				46B8210A28844FF600F300F0 /* RatingCell.swift */,
 				463154FB287B161500AE0FC5 /* MainVC.swift */,
 				468A1B59287F08E000B413A0 /* Place.swift */,
 				4642894F2880304200EC4E6E /* StorageManager.swift */,
 				463154ED287B13ED00AE0FC5 /* Main.storyboard */,
-				46B8210A28844FF600F300F0 /* RatingCell.swift */,
 				463154F0287B13F000AE0FC5 /* Assets.xcassets */,
 				463154F2287B13F000AE0FC5 /* LaunchScreen.storyboard */,
 				463154F5287B13F000AE0FC5 /* Info.plist */,
 			);
 			path = Places;
+			sourceTree = "<group>";
+		};
+		66F4F09BDBA64019DEB18D32 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E302C400B4F92E15672B4BE /* Pods_Places.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CA2F49CF84F0AFE40A643C2B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DE4C232F10E96B37C492B7E2 /* Pods-Places.debug.xcconfig */,
+				E00A7327995E2943ACFAF060 /* Pods-Places.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -93,9 +113,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 463154F8287B13F000AE0FC5 /* Build configuration list for PBXNativeTarget "Places" */;
 			buildPhases = (
+				EAC58E4911A8C296A777E9AC /* [CP] Check Pods Manifest.lock */,
 				463154E0287B13ED00AE0FC5 /* Sources */,
 				463154E1287B13ED00AE0FC5 /* Frameworks */,
 				463154E2287B13ED00AE0FC5 /* Resources */,
+				C73127B509ADC9A5411947BD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -103,8 +125,6 @@
 			);
 			name = Places;
 			packageProductDependencies = (
-				46F0A75728803D800003B236 /* Realm */,
-				46F0A75928803D800003B236 /* RealmSwift */,
 			);
 			productName = Places;
 			productReference = 463154E4287B13ED00AE0FC5 /* Places.app */;
@@ -158,6 +178,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C73127B509ADC9A5411947BD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Places/Pods-Places-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Places/Pods-Places-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Places/Pods-Places-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAC58E4911A8C296A777E9AC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Places-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		463154E0287B13ED00AE0FC5 /* Sources */ = {
@@ -313,6 +375,7 @@
 		};
 		463154F9287B13F000AE0FC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE4C232F10E96B37C492B7E2 /* Pods-Places.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -341,6 +404,7 @@
 		};
 		463154FA287B13F000AE0FC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E00A7327995E2943ACFAF060 /* Pods-Places.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -400,19 +464,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		46F0A75728803D800003B236 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46F0A75628803D800003B236 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
-		};
-		46F0A75928803D800003B236 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46F0A75628803D800003B236 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 463154DC287B13ED00AE0FC5 /* Project object */;
 }

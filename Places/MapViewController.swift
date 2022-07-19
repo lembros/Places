@@ -7,12 +7,17 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController {
     
+    let locationManager = CLLocationManager()   // Manager responsible for user location tracking
     let annotationIdentifier = "annotationIdentifier"
     var place: Place!
+    var didShowAlert = false
 
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var closeButton: UIButton! {
         didSet {
@@ -24,12 +29,75 @@ class MapViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var centerButton: UIButton! {
+        didSet {
+            let size = CGSize(width: 50, height: 50)
+            let locationImage = UIImage(named: "Location")?.scalePreservingAspectRatio(targetSize: size)
+            
+            centerButton.frame.size = size
+            centerButton.setImage(locationImage, for: .normal)
+        }
+    }
+    
+    // MARK:  - ViewDidLoad
+    
     override func viewDidLoad() {
         mapView.delegate = self
-        
+        locationManager.delegate = self
         setupPlacemark()
     }
 
+    @IBAction func centerAction() {
+        guard let location = locationManager.location?.coordinate else { return }
+        mapView.setCenter(location, animated: true)
+    }
+    
+    
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        if !didShowAlert {
+            checkPermissions()
+            didShowAlert.toggle()
+        }
+    }
+    
+    private func checkPermissions() {
+        if CLLocationManager.locationServicesEnabled() {
+            setupLocationManager()
+            checkLocationServices()
+        } else if !didShowAlert {
+            showAlert()
+            didShowAlert = true
+        }
+    }
+    
+    private func setupLocationManager() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    private func checkLocationServices() {
+        switch locationManager.authorizationStatus {
+        case .denied:
+            showAlert()
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedAlways:
+            break
+        case .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+        case .restricted:
+            showAlert()
+        @unknown default:
+            print("Unknown case")
+        }
+    }
+    
+    private func showAlert() {
+        let alertController = UIAlertController(title: "Location Services are turned off", message: "Please enable them in settings", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true)
+    }
     
     private func setupPlacemark() {
         guard let location = place.location else { return }
@@ -60,22 +128,32 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else { return nil }
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? MKPinAnnotationView
+        let annotationView = mapView.dequeueReusableAnnotationView(
+            withIdentifier: annotationIdentifier
+        ) as? MKPinAnnotationView ?? MKPinAnnotationView(
+            annotation: annotation,
+            reuseIdentifier: annotationIdentifier
+        )
         
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-        }
-        
-        annotationView?.canShowCallout = true
+        annotationView.canShowCallout = true
 
         if let imageData = place.imageData {
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            let size = annotationView.frame.size
+            
+            let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
             imageView.image = UIImage(data: imageData)
-            imageView.layer.cornerRadius = 10
+            imageView.layer.cornerRadius = 7
             imageView.clipsToBounds = true
-            annotationView?.rightCalloutAccessoryView = imageView
+            annotationView.rightCalloutAccessoryView = imageView
         }
         
         return annotationView
+    }
+}
+
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkLocationServices()
     }
 }

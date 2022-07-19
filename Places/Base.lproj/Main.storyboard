@@ -261,7 +261,7 @@
                             <button opaque="NO" contentMode="bottomRight" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="XQl-Lp-tXg">
                                 <rect key="frame" x="242" y="61" width="152" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="Lho-8o-SwA"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="Lho-8o-SwA" userLabel="width ≥ 50"/>
                                     <constraint firstAttribute="height" constant="50" id="iFR-1i-xxa"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
@@ -272,20 +272,36 @@
                                     <segue destination="yYP-Y3-Pze" kind="unwind" unwindAction="closeMap:" id="Zpg-j7-UoJ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVG-ta-yg6">
+                                <rect key="frame" x="344" y="742" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="iyL-DP-X0e"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="oEE-tu-BYa"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title=""/>
+                                <connections>
+                                    <action selector="centerAction" destination="qvc-rm-fNi" eventType="touchUpInside" id="ieD-5O-VNU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ag4-Kw-tQO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XQl-Lp-tXg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ag4-Kw-tQO" secondAttribute="leading" symbolic="YES" id="4d5-GN-SUF"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="XQl-Lp-tXg" secondAttribute="trailing" constant="20" id="78D-Cv-y2V"/>
+                            <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="HVG-ta-yg6" secondAttribute="trailing" constant="20" id="7gd-9g-05i"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="trailing" secondItem="Ag4-Kw-tQO" secondAttribute="trailing" id="86P-Ps-wPP"/>
                             <constraint firstItem="XQl-Lp-tXg" firstAttribute="top" secondItem="Ag4-Kw-tQO" secondAttribute="top" constant="17" id="FG4-7d-KQR"/>
                             <constraint firstAttribute="bottom" secondItem="mf3-Hn-T66" secondAttribute="bottom" id="XW9-LP-MfQ"/>
+                            <constraint firstItem="HVG-ta-yg6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ag4-Kw-tQO" secondAttribute="leading" symbolic="YES" id="ZIy-4d-K4Y"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="leading" secondItem="Ag4-Kw-tQO" secondAttribute="leading" id="f8T-XR-sl7"/>
+                            <constraint firstItem="Ag4-Kw-tQO" firstAttribute="bottom" secondItem="HVG-ta-yg6" secondAttribute="bottom" constant="50" id="uq7-QR-eTf"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="top" secondItem="AMi-q8-fip" secondAttribute="top" id="zfd-M4-fJa"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="centerButton" destination="HVG-ta-yg6" id="CFa-6Y-bsa"/>
                         <outlet property="closeButton" destination="XQl-Lp-tXg" id="9Ar-MU-gbF"/>
                         <outlet property="mapView" destination="mf3-Hn-T66" id="5Q1-Ah-ycW"/>
                     </connections>

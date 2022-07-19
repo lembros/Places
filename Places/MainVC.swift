@@ -106,6 +106,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData()
     }
     
+    @IBAction func cancelAction(_ segue: UIStoryboardSegue) {
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
     // MARK: Sorting
     

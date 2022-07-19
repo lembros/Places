@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Cosmos
 
 class DataInputScreen: UITableViewController {
 
@@ -18,10 +19,10 @@ class DataInputScreen: UITableViewController {
             addButton.isEnabled = false
         }
     }
-    @IBOutlet weak var ratingCell: RatingCell!
+    @IBOutlet weak var cosmosView: CosmosView!
     
     var place: Place?
-    var currentTitle: String?  = "New Place"
+    var currentTitle: String? = "New Place"
         
     var wasImageChosen = false
     
@@ -34,6 +35,13 @@ class DataInputScreen: UITableViewController {
         locationField.delegate = self
         
         placeNameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        
+        cosmosView.didTouchCosmos = { _ in
+            let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
+            impactFeedbackgenerator.prepare()
+            impactFeedbackgenerator.impactOccurred()
+        }
+        
     }
     
     private func setupScreen() {
@@ -52,11 +60,19 @@ class DataInputScreen: UITableViewController {
             self.image.contentMode = .scaleAspectFill
         }
         
-        ratingCell.setNewRating(place.rating)
+
+        cosmosView.rating = Double(place.rating)
     }
     
-    // MARK: New place
+    @IBAction func closeMap(_ segue: UIStoryboardSegue) {
+        
+    }
+    
+    // MARK: - New place
     func getNewPlace() -> Place {
+        if placeNameField.text == nil || placeNameField.text!.isEmpty {
+            return Place()
+        }
         
         let imageData = wasImageChosen ? image.image?.pngData() : UIImage(named: "imagePlaceholder")?.pngData()
         
@@ -64,13 +80,11 @@ class DataInputScreen: UITableViewController {
                       location: locationField.text,
                       type: typeField.text,
                       imageData: imageData,
-                      rating: ratingCell.rating)
+                      rating: Int(cosmosView.rating))
         return place!
     }
-
-    @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
-        dismiss(animated: true)
-    }
+    
+    // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 0 }
     
@@ -106,10 +120,20 @@ class DataInputScreen: UITableViewController {
             present(alert, animated: true)
         }
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "MapSegue" else { return }
+        
+        let dvc = segue.destination as! MapViewController
+        
+        dvc.place = place ?? getNewPlace()
+    }
 }
 
 
-// MARK: Working with text
+// MARK: - Working with text
+
 extension DataInputScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -122,7 +146,8 @@ extension DataInputScreen: UITextFieldDelegate {
 }
 
 
-// MARK: Working with images
+// MARK: - Working with images
+
 extension DataInputScreen: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     func chooseImagePicker(with source: UIImagePickerController.SourceType) {
         guard UIImagePickerController.isSourceTypeAvailable(source) else { return }

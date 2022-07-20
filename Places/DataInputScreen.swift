@@ -26,8 +26,13 @@ class DataInputScreen: UITableViewController {
         
     var wasImageChosen = false
     
+    
+    // MARK: - ViewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presentationController?.delegate = self
         
         setupScreen()
         
@@ -35,7 +40,6 @@ class DataInputScreen: UITableViewController {
         locationField.delegate = self
         
         placeNameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        
         cosmosView.didTouchCosmos = { _ in
             let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
             impactFeedbackgenerator.prepare()
@@ -174,5 +178,15 @@ extension DataInputScreen: UIImagePickerControllerDelegate, UINavigationControll
         self.image.contentMode = .scaleAspectFill
         wasImageChosen = true
         dismiss(animated: true)
+    }
+}
+
+extension DataInputScreen: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print(#function)
+    }
+    
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        print(#function)
     }
 }

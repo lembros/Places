@@ -24,6 +24,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Sorting properties
     private var isAscendingSort = true
     
+    // MARK: - ViewDidLoad
+    
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self

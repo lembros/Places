@@ -54,7 +54,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="map"/>
                                                     <connections>
-                                                        <segue destination="qvc-rm-fNi" kind="presentation" identifier="ShowLocation" id="Jcx-Km-SD2"/>
+                                                        <segue destination="qvc-rm-fNi" kind="presentation" identifier="ShowLocation" modalPresentationStyle="fullScreen" id="Jcx-Km-SD2"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -142,7 +142,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="Placeholder"/>
                                                     <connections>
-                                                        <segue destination="qvc-rm-fNi" kind="presentation" identifier="ChooseLocation" id="BB6-RU-FyX"/>
+                                                        <segue destination="qvc-rm-fNi" kind="presentation" identifier="ChooseLocation" modalPresentationStyle="fullScreen" id="BB6-RU-FyX"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -239,7 +239,7 @@
                     <navigationItem key="navigationItem" title="New Place" id="2tv-Bg-SSn">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="LOS-vI-qsH">
                             <connections>
-                                <segue destination="NoK-Z9-VFL" kind="unwind" unwindAction="cancelAction:" id="IQg-uW-2gq"/>
+                                <segue destination="NoK-Z9-VFL" kind="unwind" identifier="dismissDataScreen" unwindAction="cancelAction:" id="IQg-uW-2gq"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="Xv7-Uq-UH1">
@@ -260,21 +260,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kqM-MX-ZDZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="NoK-Z9-VFL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1462.3188405797102" y="168.75"/>
+            <point key="canvasLocation" x="1464" y="169"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="UlK-Li-jsl">
             <objects>
                 <viewController id="qvc-rm-fNi" customClass="MapViewController" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AMi-q8-fip">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mf3-Hn-T66">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mapView>
                             <button opaque="NO" contentMode="bottomRight" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="XQl-Lp-tXg">
-                                <rect key="frame" x="242" y="61" width="152" height="50"/>
+                                <rect key="frame" x="242" y="74" width="152" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="Lho-8o-SwA" userLabel="width ≥ 50"/>
                                     <constraint firstAttribute="height" constant="50" id="iFR-1i-xxa"/>
@@ -288,7 +288,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVG-ta-yg6">
-                                <rect key="frame" x="344" y="742" width="50" height="50"/>
+                                <rect key="frame" x="344" y="762" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="iyL-DP-X0e"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="oEE-tu-BYa"/>
@@ -300,7 +300,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWX-JB-m0A">
-                                <rect key="frame" x="160" y="698" width="94" height="50"/>
+                                <rect key="frame" x="160" y="752" width="94" height="50"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Done">
@@ -311,7 +311,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6c-7l-GD8">
-                                <rect key="frame" x="20" y="201" width="374" height="30"/>
+                                <rect key="frame" x="20" y="214" width="374" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -325,7 +325,7 @@
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="XQl-Lp-tXg" secondAttribute="trailing" constant="20" id="78D-Cv-y2V"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="HVG-ta-yg6" secondAttribute="trailing" constant="20" id="7gd-9g-05i"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="trailing" secondItem="Ag4-Kw-tQO" secondAttribute="trailing" id="86P-Ps-wPP"/>
-                            <constraint firstItem="XQl-Lp-tXg" firstAttribute="top" secondItem="Ag4-Kw-tQO" secondAttribute="top" constant="17" id="FG4-7d-KQR"/>
+                            <constraint firstItem="XQl-Lp-tXg" firstAttribute="top" secondItem="Ag4-Kw-tQO" secondAttribute="top" constant="30" id="FG4-7d-KQR"/>
                             <constraint firstItem="Y6c-7l-GD8" firstAttribute="leading" secondItem="Ag4-Kw-tQO" secondAttribute="leading" constant="20" id="QJi-z9-Pvq"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="Y6c-7l-GD8" secondAttribute="trailing" constant="20" id="RvW-9I-AIy"/>
                             <constraint firstAttribute="bottom" secondItem="mf3-Hn-T66" secondAttribute="bottom" id="XW9-LP-MfQ"/>
@@ -497,7 +497,7 @@
         <!--Navigation Controller-->
         <scene sceneID="2B3-PA-Tb1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LN0-BP-PrL" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LN0-BP-PrL" customClass="NavigationController" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="APi-qT-cxT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>

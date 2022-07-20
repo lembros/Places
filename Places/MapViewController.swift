@@ -11,66 +11,73 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     
-    private let locationManager = CLLocationManager()   // Manager responsible for user location tracking
-    private let annotationIdentifier = "annotationIdentifier"
-    private var didShowAlert = false
+    // MARK: - Private properties
+    
+    private let locationManager = CLLocationManager()           // Manager responsible for user location tracking
+    private let annotationIdentifier = "annotationIdentifier"   // To init annotation from identifier
     private var scaleInMeters = 1000.0
 
+    // MARK: - Public properties
+    
     var place: Place!
-    var isShowingLocation = true
+    var isShowingLocation = true    // two different modes for this ViewController: showing and choosing location
+    let pinImageView = UIImageView()
 
     // MARK: - IBOutlets
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var closeButton: UIButton! {
-        didSet {
-            let size = CGSize(width: 30, height: 30)
-            let cancelImage = UIImage(named: "cancel")?.scalePreservingAspectRatio(targetSize: size)
-            
-            closeButton.frame.size = size
-            closeButton.setImage(cancelImage, for: .normal)
-        }
-    }
-    
-    @IBOutlet weak var centerButton: UIButton! {
-        didSet {
-            let size = CGSize(width: 50, height: 50)
-            let locationImage = UIImage(named: "Location")?.scalePreservingAspectRatio(targetSize: size)
-            
-            centerButton.frame.size = size
-            centerButton.setImage(locationImage, for: .normal)
-        }
-    }
-    @IBOutlet weak var currentLocationLabel: UILabel! {
-        didSet {
-            currentLocationLabel.text = ""
-            currentLocationLabel.numberOfLines = 0
-            currentLocationLabel.isHidden = isShowingLocation
-        }
-    }
-    @IBOutlet weak var doneButton: UIButton! {
-        didSet {
-            doneButton.isHidden = isShowingLocation
-        }
-    }
-    let pinImageView = UIImageView()
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var centerButton: UIButton!
+    @IBOutlet weak var currentLocationLabel: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
     
     
-    // MARK: - ViewDidLoad
+    private func setupScreen() {
+        // Close button
+        let closeButtonSize = CGSize(width: 30, height: 30)
+        let cancelImage = UIImage(systemName: "xmark")
+        
+        closeButton.frame.size = closeButtonSize
+        closeButton.setImage(cancelImage, for: .normal)
+        closeButton.tintColor = .black
+        
+        // Center button
+        let centerButtonSize = CGSize(width: 50, height: 50)
+        let locationImage = UIImage(systemName: "location.fill")
+        
+        centerButton.frame.size = centerButtonSize
+        centerButton.setImage(locationImage, for: .normal)
+        centerButton.tintColor = .black
+        
+        // Location label
+        currentLocationLabel.text = ""
+        currentLocationLabel.numberOfLines = 0
+        currentLocationLabel.isHidden = isShowingLocation
+        
+        // 'Done' button
+        doneButton.isHidden = isShowingLocation
+        
+        // To choose location correctly
+        mapView.center = view.center
+    }
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         mapView.delegate = self
         locationManager.delegate = self
-        
-        mapView.center = view.center
+    
+        setupScreen()
         
         if isShowingLocation {
             setupPlacemark()
+        } else {
+            showPin()
         }
-        showPin()
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        checkLocation()
         if !isShowingLocation {
             centerAction()
         }
@@ -85,40 +92,29 @@ class MapViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
     
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        if !didShowAlert {
-            checkPermissions()
-            didShowAlert.toggle()
-        }
-    }
+    // MARK: - Private functions
     
     private func showPin() {
-        if isShowingLocation { return }
-        let pinIcon = UIImage(named: "Pin")!
+        let pinIcon = UIImage(systemName: "mappin")!.scalePreservingAspectRatio(targetSize: CGSize(width: 40, height: 40))
         
         pinImageView.image = pinIcon
         pinImageView.frame.size = pinIcon.size
                 
-        let move = -pinIcon.size.height
+        let move = -pinIcon.size.height / 2
         pinImageView.center = mapView.center + CGPoint(x: 0, y: move)
         view.addSubview(pinImageView)
     }
     
-    private func checkPermissions() {
+    private func checkLocation() {
         if CLLocationManager.locationServicesEnabled() {
-            setupLocationManager()
-            checkLocationServices()
-        } else if !didShowAlert {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            checkLocationPermissions()
+        } else {
             showAlert()
-            didShowAlert = true
         }
     }
     
-    private func setupLocationManager() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    
-    private func checkLocationServices() {
+    private func checkLocationPermissions() {
         switch locationManager.authorizationStatus {
         case .denied:
             showAlert()
@@ -175,6 +171,7 @@ class MapViewController: UIViewController {
 }
 
 // MARK: - Map View Deledate
+
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else { return nil }
@@ -228,9 +225,10 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
+// MARK: - LocationManagerDelegate
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationServices()
+        checkLocationPermissions()
     }
 }

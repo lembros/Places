@@ -16,6 +16,14 @@ class Place: Object {
     @Persisted var date = Date()
     @Persisted var rating: Int
     
+    var hasLocation: Bool {
+        return location != nil && !(location!.isEmpty)
+    }
+    
+    var hasType: Bool {
+        return type != nil && !(type!.isEmpty)
+    }
+    
     convenience init(name: String, location: String?, type: String?, imageData: Data?, rating: Int) {
         self.init()
         self.name = name

@@ -10,6 +10,7 @@ import RealmSwift
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var ascendingSortButton: UIBarButtonItem!
     @IBOutlet weak var sortingSegmentedControl: UISegmentedControl!
@@ -27,15 +28,18 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // MARK: - ViewDidLoad
     
     override func viewDidLoad() {
+        
+        // Table view setup
         tableView.delegate = self
         tableView.dataSource = self
         
+        // Search controller setup
         navigationItem.searchController = searchController
-        searchController.hidesNavigationBarDuringPresentation = true
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
     
+        // Initial sorting to match value in segmented control
         doSorting()
     }
     
@@ -49,16 +53,25 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
         let place = isSearching ? placesFound[indexPath.row] : places[indexPath.row]
+        
+        // Setup of table view cell
         cell.place = place
                 
         cell.nameLabel.text = place.name
-        cell.placeImage.image = UIImage(data: place.imageData!)
         
-        let location = (place.location == nil || place.location!.isEmpty) ? "Location" : place.location!
-        let type = (place.type == nil || place.type!.isEmpty) ? "Type" : place.type!
+        // If place has no image, display placeholder instead
+        if let imageData = place.imageData {
+            cell.placeImage.image = UIImage(data: imageData)
+        } else {
+            cell.placeImage.image = UIImage(named: "imagePlaceholder")
+        }
         
-        cell.locationLabel.text = location
-        cell.typeLabel.text = type
+        // If place has no location, display "Location" label instead, same with type
+        let location = place.hasLocation ? place.location! : "Location"
+        let type = place.hasType ? place.type! : "Type"
+        
+        cell.locationLabel.text  = location
+        cell.typeLabel.text      = type
                 
         cell.placeImage.contentMode = .scaleAspectFill
         cell.placeImage.layer.cornerRadius = cell.placeImage.frame.size.height / 2
@@ -68,11 +81,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Table View delegate
     
+    // Delete place
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
         let place = cell.place!
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            // Delete from database and from table view
             StorageManager.delete(object: place)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -80,24 +95,29 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    // MARK: Segues
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "EditSegue" else { return }
         guard let cell = sender as? CustomTableViewCell else { return }
-        guard let navigator = segue.destination as? UINavigationController else { return }
+        guard let navigator = segue.destination as? NavigationController else { return }
                 
         let dvc = navigator.viewControllers.first! as! DataInputScreen
         
-        dvc.currentTitle = cell.nameLabel.text
+        // MainVc -> NavigationController (aka navigator) -> DataInputScreen
+        
         dvc.place = cell.place
-        dvc.wasImageChosen = true
     }
     
+    // MARK: - IBActions
+    
+    // Unwind segue
     @IBAction func doneAction(_ segue: UIStoryboardSegue) {
         guard let svc = segue.source as? DataInputScreen else { return }
         let newPlace = svc.getNewPlace()
         
+        // If row was chosen, modify data in this row
+        // Otherwise, add new object
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPath, animated: true)
             let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
@@ -109,22 +129,24 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func cancelAction(_ segue: UIStoryboardSegue) {
+        // If row was chosen, just deselect it
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    // MARK: Sorting
+    // MARK: - Sorting
     
+    // Resort table with updated value from picker
     @IBAction func changeSortngRule(_ sender: Any) {
         doSorting()
     }
     
+    // Change sorting order and replace image accordingly
     @IBAction func changeSortingOrder(_ sender: Any) {
         isAscendingSort.toggle()
-        ascendingSortButton.image = isAscendingSort ? UIImage(named: "AZ") : UIImage(named: "ZA")
+        ascendingSortButton.image = isAscendingSort ? UIImage(systemName: "arrow.down.to.line") : UIImage(systemName: "arrow.up.to.line")
         doSorting()
     }
-    
     
     private func doSorting() {
         switch sortingSegmentedControl.selectedSegmentIndex {
@@ -140,7 +162,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: Searching
+// MARK: - Searching
 
 extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
@@ -151,5 +173,4 @@ extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
         }
         tableView.reloadData()
     }
-    
 }

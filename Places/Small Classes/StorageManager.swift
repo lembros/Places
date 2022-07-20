@@ -23,6 +23,7 @@ class StorageManager {
         }
     }
     
+    // Remember to add properies here when data model expands
     static func replace(object: Place, with newObject: Place) {
         try! realm.write {
             object.name      = newObject.name

@@ -10,36 +10,35 @@ import Cosmos
 
 class DataInputScreen: UITableViewController {
 
-    @IBOutlet weak var placeNameField: UITextField!
+    // MARK: - IBOutlets
+    
+    @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var typeField: UITextField!
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var addButton: UIBarButtonItem! {
-        didSet {
-            addButton.isEnabled = false
-        }
-    }
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cosmosView: CosmosView!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     var place: Place?
-    var currentTitle: String? = "New Place"
         
-    var wasImageChosen = false
-    
+    private var wasImageChosen = false
+    private let imagePlaceholder = UIImage(named: "Photo")
     
     // MARK: - ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        presentationController?.delegate = self
-        
+                
         setupScreen()
         
-        placeNameField.delegate = self
+        // To hide keyboard by 'Done' button
+        nameField.delegate = self
         locationField.delegate = self
         
-        placeNameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        // To update availability of 'done' button
+        nameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        
+        // Haptic feedback while changing stars
         cosmosView.didTouchCosmos = { _ in
             let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
             impactFeedbackgenerator.prepare()
@@ -49,38 +48,48 @@ class DataInputScreen: UITableViewController {
     }
     
     private func setupScreen() {
-        placeNameField.returnKeyType = .done
-        locationField.returnKeyType = .done
-        title = currentTitle
-        
-        guard let place = place else { return }
-
-        addButton.isEnabled = true
-        placeNameField.text = place.name
-        locationField.text = place.location
-        typeField.text = place.type
-        image.image = UIImage(data: place.imageData!)
-        if wasImageChosen {
-            self.image.contentMode = .scaleAspectFill
+        // Get there only in edit mode
+        if let place = place {
+            
+            title = place.name
+            nameField.text = place.name
+            locationField.text = place.location
+            typeField.text = place.type
+            
+            // If place has image
+            if let imageData = place.imageData {
+                wasImageChosen = true
+                imageView.image = UIImage(data: imageData)
+                imageView.contentMode = .scaleAspectFill
+            }
+            cosmosView.rating = Double(place.rating)
         }
         
-
-        cosmosView.rating = Double(place.rating)
+        addButton.isEnabled = nameField.hasText
+        nameField.returnKeyType = .done
+        locationField.returnKeyType = .done
     }
     
-    @IBAction func closeMap(_ segue: UIStoryboardSegue) {
+    // Empty method for exit segue
+    @IBAction func closeMap(_ segue: UIStoryboardSegue) { }
+    // Unwind segue from MapViewController
+    @IBAction func locationReturned(_ segue: UIStoryboardSegue) {
+        let svc = segue.source as! MapViewController
         
+        let newAddress = svc.currentLocationLabel.text
+        self.locationField.text = newAddress
     }
     
     // MARK: - New place
+    
     func getNewPlace() -> Place {
-        if placeNameField.text == nil || placeNameField.text!.isEmpty {
+        if !nameField.hasText {
             return Place()
         }
+                
+        let imageData = wasImageChosen ? imageView.image?.pngData() : nil
         
-        let imageData = wasImageChosen ? image.image?.pngData() : UIImage(named: "imagePlaceholder")?.pngData()
-        
-        place = Place(name: placeNameField.text!,
+        place = Place(name: nameField.text!,
                       location: locationField.text,
                       type: typeField.text,
                       imageData: imageData,
@@ -90,15 +99,19 @@ class DataInputScreen: UITableViewController {
     
     // MARK: - Table View Delegate
     
+    // Get rid of header
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 0 }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // Hide keyboard when row touched
         view.endEditing(true)
         
+        // Choosing image
         if indexPath.row == 0 {
-            
-            let cameraIcon = UIImage(named: "camera")
-            let photoIcon = UIImage(named: "photo")
+            let cameraIcon = UIImage(systemName: "camera")
+            let photoIcon = UIImage(systemName: "folder")
+            let deleteIcon = UIImage(systemName: "clear")
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
@@ -108,17 +121,25 @@ class DataInputScreen: UITableViewController {
             camera.setValue(cameraIcon, forKey: "image")
             camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
-            let library = UIAlertAction(title: "Choose from photo library", style: .default) { _ in
+            let photoLibrary = UIAlertAction(title: "Choose from photo library", style: .default) { _ in
                 self.chooseImagePicker(with: .photoLibrary)
             }
+            photoLibrary.setValue(photoIcon, forKey: "image")
+            photoLibrary.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
-            library.setValue(photoIcon, forKey: "image")
-            library.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+            let deleteImage = UIAlertAction(title: " Delete image", style: .destructive) { _ in
+                self.imageView.image = self.imagePlaceholder
+                self.imageView.contentMode = .scaleAspectFit
+                self.wasImageChosen = false
+            }
+            deleteImage.setValue(deleteIcon, forKey: "image")
+            deleteImage.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel)
             
             alert.addAction(camera)
-            alert.addAction(library)
+            alert.addAction(photoLibrary)
+            alert.addAction(deleteImage)
             alert.addAction(cancel)
             
             present(alert, animated: true)
@@ -126,22 +147,16 @@ class DataInputScreen: UITableViewController {
     }
     
     // MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard ["ShowLocation", "ChooseLocation"].contains(segue.identifier) else { return }
         
         let dvc = segue.destination as! MapViewController
-        dvc.place = place ?? getNewPlace()
-        
+        dvc.place = getNewPlace()
         dvc.isShowingLocation = segue.identifier == "ShowLocation"
     }
     
-    @IBAction func locationReturned(_ segue: UIStoryboardSegue) {
-        let svc = segue.source as! MapViewController
-        
-        let newAdress = svc.currentLocationLabel.text
-        self.locationField.text = newAdress
-    }
 }
 
 
@@ -154,7 +169,7 @@ extension DataInputScreen: UITextFieldDelegate {
     }
     
     @objc func textFieldChanged() {
-        addButton.isEnabled = placeNameField.text! != ""
+        addButton.isEnabled = nameField.hasText
     }
 }
 
@@ -174,19 +189,10 @@ extension DataInputScreen: UIImagePickerControllerDelegate, UINavigationControll
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        self.image.image = info[.editedImage] as? UIImage
-        self.image.contentMode = .scaleAspectFill
+        let image = info[.editedImage] as? UIImage
         wasImageChosen = true
+        self.imageView.image = image
+        self.imageView.contentMode = .scaleAspectFill
         dismiss(animated: true)
-    }
-}
-
-extension DataInputScreen: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print(#function)
-    }
-    
-    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        print(#function)
     }
 }

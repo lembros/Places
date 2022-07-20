@@ -54,7 +54,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="map"/>
                                                     <connections>
-                                                        <segue destination="qvc-rm-fNi" kind="presentation" identifier="MapSegue" id="Jcx-Km-SD2"/>
+                                                        <segue destination="qvc-rm-fNi" kind="presentation" identifier="ShowLocation" id="Jcx-Km-SD2"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -114,7 +114,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="RBV-3E-6ND">
-                                                    <rect key="frame" x="20" y="21" width="374" height="53"/>
+                                                    <rect key="frame" x="20" y="21" width="324" height="53"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k49-lV-Ugq">
                                                             <rect key="frame" x="0.0" y="0.0" width="64.5" height="25"/>
@@ -123,7 +123,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Moscow" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hmp-ZE-WSg">
-                                                            <rect key="frame" x="0.0" y="28" width="374" height="25"/>
+                                                            <rect key="frame" x="0.0" y="28" width="324" height="25"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textField>
@@ -133,10 +133,25 @@
                                                         <constraint firstItem="hmp-ZE-WSg" firstAttribute="leading" secondItem="RBV-3E-6ND" secondAttribute="leading" id="y3M-Dq-tdY"/>
                                                     </constraints>
                                                 </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDn-N7-K6N">
+                                                    <rect key="frame" x="354" y="41.5" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="gHU-TA-wdF"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="mj0-JZ-464"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="Placeholder"/>
+                                                    <connections>
+                                                        <segue destination="qvc-rm-fNi" kind="presentation" identifier="ChooseLocation" id="BB6-RU-FyX"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="RBV-3E-6ND" secondAttribute="trailing" id="dlz-DT-BN6"/>
+                                                <constraint firstAttribute="trailing" secondItem="RBV-3E-6ND" secondAttribute="trailing" constant="70" id="26A-jE-5XN"/>
+                                                <constraint firstItem="mDn-N7-K6N" firstAttribute="leading" secondItem="RBV-3E-6ND" secondAttribute="trailing" constant="10" id="4TJ-If-Hn1"/>
+                                                <constraint firstAttribute="trailing" secondItem="mDn-N7-K6N" secondAttribute="trailing" constant="20" symbolic="YES" id="CCI-EW-T8f"/>
                                                 <constraint firstItem="RBV-3E-6ND" firstAttribute="leading" secondItem="xYw-6Q-hfg" secondAttribute="leadingMargin" id="dqG-Qa-d2Y"/>
+                                                <constraint firstItem="mDn-N7-K6N" firstAttribute="centerY" secondItem="hmp-ZE-WSg" secondAttribute="centerY" id="gYk-mk-YO0"/>
                                                 <constraint firstItem="RBV-3E-6ND" firstAttribute="top" secondItem="xYw-6Q-hfg" secondAttribute="topMargin" constant="10" id="lDF-TV-laW"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="RBV-3E-6ND" secondAttribute="bottom" constant="-5" id="qe9-Bp-MtD"/>
                                             </constraints>
@@ -284,18 +299,40 @@
                                     <action selector="centerAction" destination="qvc-rm-fNi" eventType="touchUpInside" id="ieD-5O-VNU"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWX-JB-m0A">
+                                <rect key="frame" x="160" y="698" width="94" height="50"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Done">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="yYP-Y3-Pze" kind="unwind" unwindAction="locationReturned:" id="DXU-Ky-0f6"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6c-7l-GD8">
+                                <rect key="frame" x="20" y="201" width="374" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ag4-Kw-tQO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XQl-Lp-tXg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ag4-Kw-tQO" secondAttribute="leading" symbolic="YES" id="4d5-GN-SUF"/>
+                            <constraint firstItem="yWX-JB-m0A" firstAttribute="centerX" secondItem="mf3-Hn-T66" secondAttribute="centerX" id="68W-Ui-AIZ"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="XQl-Lp-tXg" secondAttribute="trailing" constant="20" id="78D-Cv-y2V"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="HVG-ta-yg6" secondAttribute="trailing" constant="20" id="7gd-9g-05i"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="trailing" secondItem="Ag4-Kw-tQO" secondAttribute="trailing" id="86P-Ps-wPP"/>
                             <constraint firstItem="XQl-Lp-tXg" firstAttribute="top" secondItem="Ag4-Kw-tQO" secondAttribute="top" constant="17" id="FG4-7d-KQR"/>
+                            <constraint firstItem="Y6c-7l-GD8" firstAttribute="leading" secondItem="Ag4-Kw-tQO" secondAttribute="leading" constant="20" id="QJi-z9-Pvq"/>
+                            <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="Y6c-7l-GD8" secondAttribute="trailing" constant="20" id="RvW-9I-AIy"/>
                             <constraint firstAttribute="bottom" secondItem="mf3-Hn-T66" secondAttribute="bottom" id="XW9-LP-MfQ"/>
                             <constraint firstItem="HVG-ta-yg6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ag4-Kw-tQO" secondAttribute="leading" symbolic="YES" id="ZIy-4d-K4Y"/>
+                            <constraint firstItem="Y6c-7l-GD8" firstAttribute="top" secondItem="XQl-Lp-tXg" secondAttribute="bottom" constant="90" id="drE-Q5-AfZ"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="leading" secondItem="Ag4-Kw-tQO" secondAttribute="leading" id="f8T-XR-sl7"/>
+                            <constraint firstItem="yWX-JB-m0A" firstAttribute="top" secondItem="mf3-Hn-T66" secondAttribute="bottom" constant="-144" id="gCv-dO-hHR"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="bottom" secondItem="HVG-ta-yg6" secondAttribute="bottom" constant="50" id="uq7-QR-eTf"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="top" secondItem="AMi-q8-fip" secondAttribute="top" id="zfd-M4-fJa"/>
                         </constraints>
@@ -303,13 +340,15 @@
                     <connections>
                         <outlet property="centerButton" destination="HVG-ta-yg6" id="CFa-6Y-bsa"/>
                         <outlet property="closeButton" destination="XQl-Lp-tXg" id="9Ar-MU-gbF"/>
+                        <outlet property="currentLocationLabel" destination="Y6c-7l-GD8" id="fKK-YN-xQM"/>
+                        <outlet property="doneButton" destination="yWX-JB-m0A" id="0GB-Hk-vcm"/>
                         <outlet property="mapView" destination="mf3-Hn-T66" id="5Q1-Ah-ycW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kzr-nD-rgF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="yYP-Y3-Pze" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2542" y="169"/>
+            <point key="canvasLocation" x="2540.579710144928" y="168.75"/>
         </scene>
         <!--MainVC-->
         <scene sceneID="b0e-bb-haZ">
@@ -481,10 +520,12 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="aVd-Rn-VdL"/>
+        <segue reference="BB6-RU-FyX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="195" height="196"/>
+        <image name="Placeholder" width="22" height="22"/>
         <image name="close" width="128" height="128"/>
         <image name="map" width="50" height="50"/>
         <systemColor name="systemBackgroundColor">

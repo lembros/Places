@@ -11,10 +11,13 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     
-    let locationManager = CLLocationManager()   // Manager responsible for user location tracking
-    let annotationIdentifier = "annotationIdentifier"
+    private let locationManager = CLLocationManager()   // Manager responsible for user location tracking
+    private let annotationIdentifier = "annotationIdentifier"
+    private var didShowAlert = false
+    private var scaleInMeters = 1000.0
+
     var place: Place!
-    var didShowAlert = false
+    var isShowingLocation = true
 
     // MARK: - IBOutlets
     
@@ -38,27 +41,67 @@ class MapViewController: UIViewController {
             centerButton.setImage(locationImage, for: .normal)
         }
     }
+    @IBOutlet weak var currentLocationLabel: UILabel! {
+        didSet {
+            currentLocationLabel.text = ""
+            currentLocationLabel.numberOfLines = 0
+            currentLocationLabel.isHidden = isShowingLocation
+        }
+    }
+    @IBOutlet weak var doneButton: UIButton! {
+        didSet {
+            doneButton.isHidden = isShowingLocation
+        }
+    }
+    let pinImageView = UIImageView()
     
-    // MARK:  - ViewDidLoad
+    
+    // MARK: - ViewDidLoad
     
     override func viewDidLoad() {
         mapView.delegate = self
         locationManager.delegate = self
-        setupPlacemark()
+        
+        mapView.center = view.center
+        
+        if isShowingLocation {
+            setupPlacemark()
+        }
+        showPin()
     }
 
-    @IBAction func centerAction() {
-        guard let location = locationManager.location?.coordinate else { return }
-        mapView.setCenter(location, animated: true)
+    override func viewDidAppear(_ animated: Bool) {
+        if !isShowingLocation {
+            centerAction()
+        }
     }
     
-    
+    // MARK: - IBActions
+    @IBAction func centerAction() {
+        guard let location = locationManager.location?.coordinate else { return }
+        
+        let region = MKCoordinateRegion(center: location, latitudinalMeters: scaleInMeters, longitudinalMeters: scaleInMeters)
+        
+        mapView.setRegion(region, animated: true)
+    }
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         if !didShowAlert {
             checkPermissions()
             didShowAlert.toggle()
         }
+    }
+    
+    private func showPin() {
+        if isShowingLocation { return }
+        let pinIcon = UIImage(named: "Pin")!
+        
+        pinImageView.image = pinIcon
+        pinImageView.frame.size = pinIcon.size
+                
+        let move = -pinIcon.size.height
+        pinImageView.center = mapView.center + CGPoint(x: 0, y: move)
+        view.addSubview(pinImageView)
     }
     
     private func checkPermissions() {
@@ -121,6 +164,14 @@ class MapViewController: UIViewController {
             self.mapView.selectAnnotation(annotation, animated: true)
         }
     }
+    
+    private func getAddress(from mapView: MKMapView) -> CLLocation {
+        let latitude = mapView.centerCoordinate.latitude
+        let longitude = mapView.centerCoordinate.longitude
+        
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
 }
 
 // MARK: - Map View Deledate
@@ -148,6 +199,32 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let center = getAddress(from: mapView)
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(center) { placemarks, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            guard let placemarks = placemarks, let placemark = placemarks.first else { return }
+                                
+            let streetName = placemark.thoroughfare
+            let houseNumber = placemark.subThoroughfare
+                
+            var address = ""
+                
+            switch (streetName, houseNumber) {
+            case (nil, nil): break
+            case (let street, nil): address = street!
+            default: address = streetName! + ", " + houseNumber!
+            }
+            
+            self.currentLocationLabel.text = address
+        }
     }
 }
 

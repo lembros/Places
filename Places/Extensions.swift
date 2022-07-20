@@ -36,3 +36,18 @@ extension UIImage {
         return scaledImage
     }
 }
+
+
+extension CGPoint {
+    static prefix func -(_ a: CGPoint) -> CGPoint{
+        CGPoint(x: -a.x, y: -a.y)
+    }
+    
+    static func +(_ a: CGPoint, _ b: CGPoint) -> CGPoint {
+        CGPoint(x: a.x + b.x, y: a.y + b.y)
+    }
+    
+    static func -(_ a: CGPoint, _ b: CGPoint) -> CGPoint {
+        a + (-b)
+    }
+}

@@ -123,11 +123,20 @@ class DataInputScreen: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "MapSegue" else { return }
+        
+        guard ["ShowLocation", "ChooseLocation"].contains(segue.identifier) else { return }
         
         let dvc = segue.destination as! MapViewController
-        
         dvc.place = place ?? getNewPlace()
+        
+        dvc.isShowingLocation = segue.identifier == "ShowLocation"
+    }
+    
+    @IBAction func locationReturned(_ segue: UIStoryboardSegue) {
+        let svc = segue.source as! MapViewController
+        
+        let newAdress = svc.currentLocationLabel.text
+        self.locationField.text = newAdress
     }
 }
 

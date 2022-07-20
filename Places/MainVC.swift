@@ -41,6 +41,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
         // Initial sorting to match value in segmented control
         doSorting()
+        
+        // Adding right and left swipe recognizers
+        setupGestures()
     }
     
     // MARK: - Table view data source
@@ -79,7 +82,32 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    // MARK: Table View delegate
+    // MARK: - Private methods
+    
+    private func setupGestures() {
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeHappened(_:)))
+        rightSwipe.direction = .right
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeHappened(_:)))
+        leftSwipe.direction = .left
+        
+        view.addGestureRecognizer(rightSwipe)
+        view.addGestureRecognizer(leftSwipe)
+    }
+    
+    // MARK: - @objc
+    
+    @objc private func swipeHappened(_ gesture: UISwipeGestureRecognizer) {
+        let change = gesture.direction == .right ? 1 : -1
+        
+        // If value is allowed
+        if (0..<sortingSegmentedControl.numberOfSegments).contains(sortingSegmentedControl.selectedSegmentIndex + change) {
+            sortingSegmentedControl.selectedSegmentIndex += change
+            doSorting()
+        }
+    }
+    
+    // MARK: - Table View delegate
     
     // Delete place
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

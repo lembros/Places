@@ -16,12 +16,13 @@ class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()           // Manager responsible for user location tracking
     private let annotationIdentifier = "annotationIdentifier"   // To init annotation from identifier
     private var scaleInMeters = 1000.0
+    private let pinImageView = UIImageView()
+    private var coordinate: CLLocationCoordinate2D?
 
     // MARK: - Public properties
     
     var place: Place!
     var isShowingLocation = true    // two different modes for this ViewController: showing and choosing location
-    let pinImageView = UIImageView()
 
     // MARK: - IBOutlets
     
@@ -30,6 +31,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var centerButton: UIButton!
     @IBOutlet weak var currentLocationLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var getDirectionsButton: UIButton!
     
     
     private func setupScreen() {
@@ -56,6 +58,9 @@ class MapViewController: UIViewController {
         
         // 'Done' button
         doneButton.isHidden = isShowingLocation
+        
+        // 'Get directions' button
+        getDirectionsButton.isHidden = !isShowingLocation
         
         // To choose location correctly
         mapView.center = view.center
@@ -92,6 +97,16 @@ class MapViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
     
+    @IBAction func getDirectionsAction(_ sender: Any) {
+        guard let coordinate = coordinate else {
+            showAlert(title: "Nothing to show", message: "Couldn't find place ccordinates")
+            return
+        }
+        
+        guard let url = URL(string: "yandexmaps://maps.yandex.ru/?pt=\(coordinate.longitude),\(coordinate.latitude)&z=17") else { print("fail"); return }
+        UIApplication.shared.open(url)
+    }
+    
     // MARK: - Private functions
     
     private func showPin() {
@@ -110,14 +125,14 @@ class MapViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             checkLocationPermissions()
         } else {
-            showAlert()
+            showAlert(title: "Location services are disabled", message: "Please enable location in system preferences")
         }
     }
     
     private func checkLocationPermissions() {
         switch locationManager.authorizationStatus {
         case .denied:
-            showAlert()
+            showAlert(title: "Access to location services is denied", message: "Please change permissions in system preferences")
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .authorizedAlways:
@@ -125,14 +140,14 @@ class MapViewController: UIViewController {
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
         case .restricted:
-            showAlert()
+            showAlert(title: "Access to location services is restrcted", message: "Please change permissions in system preferences")
         @unknown default:
             print("Unknown case")
         }
     }
     
-    private func showAlert() {
-        let alertController = UIAlertController(title: "Location Services are turned off", message: "Please enable them in settings", preferredStyle: .alert)
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel)
         alertController.addAction(okAction)
         self.present(alertController, animated: true)
@@ -155,6 +170,8 @@ class MapViewController: UIViewController {
             
             guard let placemarkLocation = placemarks?.first?.location else { return }
             annotation.coordinate = placemarkLocation.coordinate
+            
+            self.coordinate = placemarkLocation.coordinate
             
             self.mapView.showAnnotations([annotation], animated: true)
             self.mapView.selectAnnotation(annotation, animated: true)
@@ -208,18 +225,16 @@ extension MapViewController: MKMapViewDelegate {
                 return
             }
             guard let placemarks = placemarks, let placemark = placemarks.first else { return }
-                                
+                    
+            let cityName = placemark.administrativeArea
             let streetName = placemark.thoroughfare
             let houseNumber = placemark.subThoroughfare
-                
-            var address = ""
-                
-            switch (streetName, houseNumber) {
-            case (nil, nil): break
-            case (let street, nil): address = street!
-            default: address = streetName! + ", " + houseNumber!
-            }
             
+            guard let _ = streetName else { return }
+            
+            let addressArray = [cityName, streetName, houseNumber].map { $0 ?? "" }
+            let address = addressArray.joined(separator: ", ")
+
             self.currentLocationLabel.text = address
         }
     }

@@ -138,8 +138,6 @@
 			dependencies = (
 			);
 			name = Places;
-			packageProductDependencies = (
-			);
 			productName = Places;
 			productReference = 463154E4287B13ED00AE0FC5 /* Places.app */;
 			productType = "com.apple.product-type.application";

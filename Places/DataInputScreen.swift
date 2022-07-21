@@ -44,10 +44,11 @@ class DataInputScreen: UITableViewController {
             impactFeedbackgenerator.prepare()
             impactFeedbackgenerator.impactOccurred()
         }
-        
     }
     
     private func setupScreen() {
+        cosmosView.rating = 0
+        
         // Get there only in edit mode
         if let place = place {
             

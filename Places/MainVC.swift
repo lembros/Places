@@ -29,7 +29,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         
-        // Table view setup
+        // TableView setup
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -132,7 +132,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 
         let dvc = navigator.viewControllers.first! as! DataInputScreen
         
-        // MainVc -> NavigationController (aka navigator) -> DataInputScreen
+        // MainVC -> NavigationController (aka navigator) -> DataInputScreen
         
         dvc.place = cell.place
     }

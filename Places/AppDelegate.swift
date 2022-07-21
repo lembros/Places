@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // To migrate Realm Database
         // Copied from documentation
-        
         let config = Realm.Configuration(schemaVersion: 3)
         Realm.Configuration.defaultConfiguration = config
         

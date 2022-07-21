@@ -228,6 +228,31 @@
                                             <constraint firstItem="azr-yU-ui4" firstAttribute="height" secondItem="RnD-Xd-IJf" secondAttribute="height" id="cz2-1s-QLI"/>
                                         </constraints>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="140" id="JUk-Eb-bV7">
+                                        <rect key="frame" x="0.0" y="624.5" width="414" height="140"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JUk-Eb-bV7" id="SJJ-XI-26Q">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Krp-w9-gIq">
+                                                    <rect key="frame" x="171.5" y="54.5" width="71" height="31"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Yandex"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Krp-w9-gIq" firstAttribute="centerY" secondItem="SJJ-XI-26Q" secondAttribute="centerY" id="9CP-8K-8c6"/>
+                                                <constraint firstItem="Krp-w9-gIq" firstAttribute="centerX" secondItem="SJJ-XI-26Q" secondAttribute="centerX" id="vkw-pX-yAY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="width" secondItem="JUk-Eb-bV7" secondAttribute="width" id="AKz-da-z4g"/>
+                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="centerY" secondItem="JUk-Eb-bV7" secondAttribute="centerY" id="Pa4-KG-UD5"/>
+                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="height" secondItem="JUk-Eb-bV7" secondAttribute="height" id="Vja-P2-Xql"/>
+                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="centerX" secondItem="JUk-Eb-bV7" secondAttribute="centerX" id="tfd-ar-jUC"/>
+                                        </constraints>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -316,6 +341,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fxh-SM-0me">
+                                <rect key="frame" x="105" y="752" width="204" height="50"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Get directions">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="getDirectionsAction:" destination="qvc-rm-fNi" eventType="touchUpInside" id="yTI-oK-bBh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ag4-Kw-tQO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -325,6 +361,7 @@
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="XQl-Lp-tXg" secondAttribute="trailing" constant="20" id="78D-Cv-y2V"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="HVG-ta-yg6" secondAttribute="trailing" constant="20" id="7gd-9g-05i"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="trailing" secondItem="Ag4-Kw-tQO" secondAttribute="trailing" id="86P-Ps-wPP"/>
+                            <constraint firstItem="fxh-SM-0me" firstAttribute="leading" secondItem="yWX-JB-m0A" secondAttribute="trailing" constant="-149" id="DaY-Tw-UV3"/>
                             <constraint firstItem="XQl-Lp-tXg" firstAttribute="top" secondItem="Ag4-Kw-tQO" secondAttribute="top" constant="30" id="FG4-7d-KQR"/>
                             <constraint firstItem="Y6c-7l-GD8" firstAttribute="leading" secondItem="Ag4-Kw-tQO" secondAttribute="leading" constant="20" id="QJi-z9-Pvq"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="trailing" secondItem="Y6c-7l-GD8" secondAttribute="trailing" constant="20" id="RvW-9I-AIy"/>
@@ -333,7 +370,9 @@
                             <constraint firstItem="Y6c-7l-GD8" firstAttribute="top" secondItem="XQl-Lp-tXg" secondAttribute="bottom" constant="90" id="drE-Q5-AfZ"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="leading" secondItem="Ag4-Kw-tQO" secondAttribute="leading" id="f8T-XR-sl7"/>
                             <constraint firstItem="yWX-JB-m0A" firstAttribute="top" secondItem="mf3-Hn-T66" secondAttribute="bottom" constant="-144" id="gCv-dO-hHR"/>
+                            <constraint firstItem="fxh-SM-0me" firstAttribute="top" secondItem="yWX-JB-m0A" secondAttribute="bottom" constant="-50" id="iLD-qo-vLd"/>
                             <constraint firstItem="Ag4-Kw-tQO" firstAttribute="bottom" secondItem="HVG-ta-yg6" secondAttribute="bottom" constant="50" id="uq7-QR-eTf"/>
+                            <constraint firstItem="HVG-ta-yg6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fxh-SM-0me" secondAttribute="trailing" constant="8" symbolic="YES" id="wn8-89-LvF"/>
                             <constraint firstItem="mf3-Hn-T66" firstAttribute="top" secondItem="AMi-q8-fip" secondAttribute="top" id="zfd-M4-fJa"/>
                         </constraints>
                     </view>
@@ -342,6 +381,7 @@
                         <outlet property="closeButton" destination="XQl-Lp-tXg" id="9Ar-MU-gbF"/>
                         <outlet property="currentLocationLabel" destination="Y6c-7l-GD8" id="fKK-YN-xQM"/>
                         <outlet property="doneButton" destination="yWX-JB-m0A" id="0GB-Hk-vcm"/>
+                        <outlet property="getDirectionsButton" destination="fxh-SM-0me" id="m2g-Rs-Soz"/>
                         <outlet property="mapView" destination="mf3-Hn-T66" id="5Q1-Ah-ycW"/>
                     </connections>
                 </viewController>
@@ -467,7 +507,7 @@
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Zkg-3r-Kdu">
-                            <rect key="frame" x="62" y="5.5" width="292.5" height="33"/>
+                            <rect key="frame" x="61" y="5.5" width="292.5" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Date"/>

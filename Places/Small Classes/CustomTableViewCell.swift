@@ -17,7 +17,7 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet var images: [UIImageView]!
     
     var place: Place! {
-        // As soon as place property is set, we can now setup rating stars
+        // As soon as place property is set, we can setup rating stars
         didSet {
             let length = 15
             let size = CGSize(width: length, height: length)

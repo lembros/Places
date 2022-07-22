@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -130,7 +130,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         guard let cell = sender as? CustomTableViewCell else { return }
         guard let navigator = segue.destination as? NavigationController else { return }
                 
-        let dvc = navigator.viewControllers.first! as! DataInputScreen
+        let dvc = navigator.viewControllers.first! as! DataViewController
         
         // MainVC -> NavigationController (aka navigator) -> DataInputScreen
         
@@ -141,7 +141,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Unwind segue
     @IBAction func doneAction(_ segue: UIStoryboardSegue) {
-        guard let svc = segue.source as? DataInputScreen else { return }
+        guard let svc = segue.source as? DataViewController else { return }
         let newPlace = svc.getNewPlace()
         
         // If row was chosen, modify data in this row
@@ -192,7 +192,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Searching
 
-extension MainVC: UISearchResultsUpdating, UISearchBarDelegate {
+extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         let searchingFor = searchController.searchBar.text!
         

@@ -15,9 +15,8 @@ class MapViewController: UIViewController {
     
     private let locationManager = CLLocationManager()           // Manager responsible for user location tracking
     private let annotationIdentifier = "annotationIdentifier"   // To init annotation from identifier
-    private var scaleInMeters = 1000.0
     private let pinImageView = UIImageView()
-    private var coordinate: CLLocationCoordinate2D?
+    private let mapManager = MapManager()
 
     // MARK: - Public properties
     
@@ -33,6 +32,38 @@ class MapViewController: UIViewController {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var getDirectionsButton: UIButton!
     
+    // MARK: - View Lifecycle
+    
+    override func viewDidLoad() {
+        mapView.delegate = self
+        locationManager.delegate = self
+    
+        setupScreen()
+        
+        if isShowingLocation {
+            mapManager.setupPlacemark(from: place, in: mapView)
+        } else {
+            showPin()
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        mapManager.checkLocation(locationManager: locationManager, mapView: mapView)
+        if !isShowingLocation {
+            mapManager.centerMap(locationManager: locationManager, mapView: mapView)
+        }
+    }
+    
+    // MARK: - IBActions
+    @IBAction func centerAction() {
+        mapManager.centerMap(locationManager: locationManager, mapView: mapView)
+    }
+    
+    @IBAction func getDirectionsAction(_ sender: Any) {
+        mapManager.getDirections()
+    }
+    
+    // MARK: - Private functions
     
     private func setupScreen() {
         // Close button
@@ -64,50 +95,11 @@ class MapViewController: UIViewController {
         
         // To choose location correctly
         mapView.center = view.center
-    }
-    
-    // MARK: - View Lifecycle
-    
-    override func viewDidLoad() {
-        mapView.delegate = self
-        locationManager.delegate = self
-    
-        setupScreen()
         
-        if isShowingLocation {
-            setupPlacemark()
-        } else {
+        if !isShowingLocation {
             showPin()
         }
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        checkLocation()
-        if !isShowingLocation {
-            centerAction()
-        }
-    }
-    
-    // MARK: - IBActions
-    @IBAction func centerAction() {
-        guard let location = locationManager.location?.coordinate else { return }
-        
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: scaleInMeters, longitudinalMeters: scaleInMeters)
-        
-        mapView.setRegion(region, animated: true)
-    }
-    
-    @IBAction func getDirectionsAction(_ sender: Any) {
-        guard let coordinate = coordinate else {
-            showAlert(title: "Nothing to show", message: "Couldn't find place ccordinates")
-            return
-        }
-        
-        guard let url = URL(string: "yandexmaps://maps.yandex.ru/?pt=\(coordinate.longitude),\(coordinate.latitude)&z=17") else { print("fail"); return }
-        UIApplication.shared.open(url)
-    }
-    
-    // MARK: - Private functions
     
     private func showPin() {
         let pinIcon = UIImage(systemName: "mappin")!.scalePreservingAspectRatio(targetSize: CGSize(width: 40, height: 40))
@@ -119,72 +111,6 @@ class MapViewController: UIViewController {
         pinImageView.center = mapView.center + CGPoint(x: 0, y: move)
         view.addSubview(pinImageView)
     }
-    
-    private func checkLocation() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            checkLocationPermissions()
-        } else {
-            showAlert(title: "Location services are disabled", message: "Please enable location in system preferences")
-        }
-    }
-    
-    private func checkLocationPermissions() {
-        switch locationManager.authorizationStatus {
-        case .denied:
-            showAlert(title: "Access to location services is denied", message: "Please change permissions in system preferences")
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .authorizedAlways:
-            break
-        case .authorizedWhenInUse:
-            mapView.showsUserLocation = true
-        case .restricted:
-            showAlert(title: "Access to location services is restrcted", message: "Please change permissions in system preferences")
-        @unknown default:
-            print("Unknown case")
-        }
-    }
-    
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel)
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true)
-    }
-    
-    private func setupPlacemark() {
-        guard let location = place.location else { return }
-        
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(location) { placemarks, error in
-            if let error = error {
-                print(error)
-                print(location)
-                return
-            }
-            
-            let annotation = MKPointAnnotation()
-            annotation.title = self.place.name
-            annotation.subtitle = self.place.type
-            
-            guard let placemarkLocation = placemarks?.first?.location else { return }
-            annotation.coordinate = placemarkLocation.coordinate
-            
-            self.coordinate = placemarkLocation.coordinate
-            
-            self.mapView.showAnnotations([annotation], animated: true)
-            self.mapView.selectAnnotation(annotation, animated: true)
-        }
-    }
-    
-    private func getAddress(from mapView: MKMapView) -> CLLocation {
-        let latitude = mapView.centerCoordinate.latitude
-        let longitude = mapView.centerCoordinate.longitude
-        
-        return CLLocation(latitude: latitude, longitude: longitude)
-    }
-    
 }
 
 // MARK: - Map View Deledate
@@ -205,7 +131,7 @@ extension MapViewController: MKMapViewDelegate {
         if let imageData = place.imageData {
             let size = annotationView.frame.size
             
-            let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
+            let imageView = UIImageView(frame: CGRect(origin: .zero, size: size))
             imageView.image = UIImage(data: imageData)
             imageView.layer.cornerRadius = 7
             imageView.clipsToBounds = true
@@ -216,7 +142,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let center = getAddress(from: mapView)
+        let center = mapManager.getAddress(mapView: mapView)
         
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(center) { placemarks, error in
@@ -244,6 +170,6 @@ extension MapViewController: MKMapViewDelegate {
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationPermissions()
+        mapManager.checkLocation(locationManager: manager, mapView: mapView)
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 import Cosmos
 
-class DataInputScreen: UITableViewController {
+class DataViewController: UITableViewController {
 
     // MARK: - IBOutlets
     
@@ -163,7 +163,7 @@ class DataInputScreen: UITableViewController {
 
 // MARK: - Working with text
 
-extension DataInputScreen: UITextFieldDelegate {
+extension DataViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -177,7 +177,7 @@ extension DataInputScreen: UITextFieldDelegate {
 
 // MARK: - Working with images
 
-extension DataInputScreen: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
+extension DataViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     func chooseImagePicker(with source: UIImagePickerController.SourceType) {
         guard UIImagePickerController.isSourceTypeAvailable(source) else { return }
         

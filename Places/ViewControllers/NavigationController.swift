@@ -17,7 +17,7 @@ class NavigationController: UINavigationController {
 extension NavigationController: UIAdaptivePresentationControllerDelegate {
     // Just to deselect the cell when DataInputScreen is dismissed
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        let dataScreen = children.first! as! DataInputScreen
+        let dataScreen = children.first! as! DataViewController
         
         dataScreen.performSegue(withIdentifier: "dismissDataScreen", sender: dataScreen)
     }

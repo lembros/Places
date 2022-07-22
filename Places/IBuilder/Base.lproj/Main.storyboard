@@ -27,7 +27,7 @@
         <!--New Place-->
         <scene sceneID="lz2-dN-O4b">
             <objects>
-                <tableViewController id="XzG-H3-Px7" customClass="DataInputScreen" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="XzG-H3-Px7" customClass="DataViewController" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="ojx-iw-blr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -228,31 +228,6 @@
                                             <constraint firstItem="azr-yU-ui4" firstAttribute="height" secondItem="RnD-Xd-IJf" secondAttribute="height" id="cz2-1s-QLI"/>
                                         </constraints>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="140" id="JUk-Eb-bV7">
-                                        <rect key="frame" x="0.0" y="624.5" width="414" height="140"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JUk-Eb-bV7" id="SJJ-XI-26Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Krp-w9-gIq">
-                                                    <rect key="frame" x="171.5" y="54.5" width="71" height="31"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Yandex"/>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Krp-w9-gIq" firstAttribute="centerY" secondItem="SJJ-XI-26Q" secondAttribute="centerY" id="9CP-8K-8c6"/>
-                                                <constraint firstItem="Krp-w9-gIq" firstAttribute="centerX" secondItem="SJJ-XI-26Q" secondAttribute="centerX" id="vkw-pX-yAY"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <constraints>
-                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="width" secondItem="JUk-Eb-bV7" secondAttribute="width" id="AKz-da-z4g"/>
-                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="centerY" secondItem="JUk-Eb-bV7" secondAttribute="centerY" id="Pa4-KG-UD5"/>
-                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="height" secondItem="JUk-Eb-bV7" secondAttribute="height" id="Vja-P2-Xql"/>
-                                            <constraint firstItem="SJJ-XI-26Q" firstAttribute="centerX" secondItem="JUk-Eb-bV7" secondAttribute="centerX" id="tfd-ar-jUC"/>
-                                        </constraints>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -388,12 +363,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kzr-nD-rgF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="yYP-Y3-Pze" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2540.579710144928" y="168.75"/>
+            <point key="canvasLocation" x="2297" y="169"/>
         </scene>
-        <!--MainVC-->
+        <!--Main View Controller-->
         <scene sceneID="b0e-bb-haZ">
             <objects>
-                <viewController id="eoo-bo-YrM" customClass="MainVC" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="eoo-bo-YrM" customClass="MainViewController" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bW-V9-4V4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <subviews>

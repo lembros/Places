@@ -8,7 +8,19 @@
 import UIKit
 import RealmSwift
 
-class Place: Object {
+protocol PlaceProtocol {
+    var name: String        { get set }
+    var location: String?   { get set }
+    var imageData: Data?    { get set }
+    var type: String?       { get set }
+    var date: Date          { get set }
+    var rating: Int         { get set }
+    
+    var hasLocation: Bool   { get }
+    var hasType: Bool       { get }
+}
+
+class Place: Object, PlaceProtocol {
     @Persisted var name = ""
     @Persisted var location: String?
     @Persisted var imageData: Data?

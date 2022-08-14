@@ -16,7 +16,7 @@ class CustomTableViewCell: UITableViewCell {
     
     @IBOutlet var images: [UIImageView]!
     
-    var place: Place! {
+    var place: PlaceProtocol! {
         // As soon as place property is set, we can setup rating stars
         didSet {
             let length = 15

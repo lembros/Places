@@ -19,7 +19,7 @@ class DataViewController: UITableViewController {
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    var place: Place?
+    var place: PlaceProtocol?
         
     private var wasImageChosen = false
     private let imagePlaceholder = UIImage(named: "Photo")
@@ -83,7 +83,7 @@ class DataViewController: UITableViewController {
     
     // MARK: - New place
     
-    func getNewPlace() -> Place {
+    func getNewPlace() -> PlaceProtocol {
         if !nameField.hasText {
             return Place()
         }

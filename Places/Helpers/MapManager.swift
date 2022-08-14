@@ -33,7 +33,7 @@ class MapManager {
         mapView.setRegion(region, animated: true)
     }
     
-    func setupPlacemark(from place: Place, in mapView: MKMapView) {
+    func setupPlacemark(from place: PlaceProtocol, in mapView: MKMapView) {
         guard let location = place.location else { return }
         
         let geocoder = CLGeocoder()

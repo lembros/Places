@@ -49,13 +49,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Table view data source
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isSearching ? placesFound.count : places.count
+        return isSearching ? placesFound.count : StorageManager.places.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
-        let place = isSearching ? placesFound[indexPath.row] : places[indexPath.row]
+        let place = isSearching ? placesFound[indexPath.row] : StorageManager.places[indexPath.row]
         
         // Setup of table view cell
         cell.place = place
@@ -179,11 +179,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func doSorting() {
         switch sortingSegmentedControl.selectedSegmentIndex {
         case 0:
-            places = places.sorted(by: \Place.date, ascending: isAscendingSort)
+            StorageManager.places = StorageManager.places.sorted(by: \Place.date, ascending: isAscendingSort)
         case 1:
-            places = places.sorted(by: \Place.name, ascending: isAscendingSort)
+            StorageManager.places = StorageManager.places.sorted(by: \Place.name, ascending: isAscendingSort)
         case 2:
-            places = places.sorted(by: \Place.rating, ascending: isAscendingSort)
+            StorageManager.places = StorageManager.places.sorted(by: \Place.rating, ascending: isAscendingSort)
         default: break
         }
         tableView.reloadData()
@@ -196,7 +196,7 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         let searchingFor = searchController.searchBar.text!
         
-        placesFound = places.where {
+        placesFound = StorageManager.places.where {
             $0.name.contains(searchingFor, options: .caseInsensitive) || $0.location.contains(searchingFor, options: .caseInsensitive)
         }
         tableView.reloadData()

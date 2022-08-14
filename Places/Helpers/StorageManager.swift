@@ -7,25 +7,30 @@
 
 import RealmSwift
 
-let realm = try! Realm()
-var places = realm.objects(Place.self)
 
 class StorageManager {
-    static func add(object: Place) {
+    static let realm = try! Realm()
+    static var places = realm.objects(Place.self)
+    
+    // If class for storing places changes, just change it here
+    typealias PlaceToStore = Place
+    
+    static func add(object: PlaceProtocol) {
         try! realm.write {
-            realm.add(object)
+            realm.add(object as! PlaceToStore)
         }
     }
     
-    static func delete(object: Place) {
+    static func delete(object: PlaceProtocol) {
         try! realm.write {
-            realm.delete(object)
+            realm.delete(object as! PlaceToStore)
         }
     }
     
     // Remember to add properies here when data model expands
-    static func replace(object: Place, with newObject: Place) {
+    static func replace(object: PlaceProtocol, with newObject: PlaceProtocol) {
         try! realm.write {
+            guard let object = object as? PlaceToStore, let newObject = newObject as? PlaceToStore else { return }
             object.name      = newObject.name
             object.location  = newObject.location
             object.type      = newObject.type

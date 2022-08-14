@@ -20,7 +20,7 @@ class MapViewController: UIViewController {
 
     // MARK: - Public properties
     
-    var place: Place!
+    var place: PlaceProtocol!
     var isShowingLocation = true    // two different modes for this ViewController: showing and choosing location
 
     // MARK: - IBOutlets
